@@ -11,6 +11,12 @@ export const Index = () => {
         <p>
           <Link to='/dummy'>ダミーページ</Link>
         </p>
+        <p>
+          <Link to='/curriculum/beginner/introduction'>イントロダクション</Link>
+        </p>
+        <p>
+          <Link to='/curriculum/beginner/javascript'>JavaScript学習</Link>
+        </p>
       </header>
     </div>
   )
