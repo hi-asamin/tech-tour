@@ -7,20 +7,20 @@
 * より実戦に近い形式で学習することで、仕事になれてもらう
 
 ## カリキュラム一覧
-1. 導入
-1. 学習環境構築
-1. HTML、CSS
-1. JavaScript
-1. Node.js/Express
-1. TypeScript
-1. React.js
-1. Git/CLI/MySQL
-1. Jest（単体テスト）
-1. Github/Jira/Confluence（応用課題の進捗やタスク管理）
-1. CleanArchitecture（Node.js/Express/TypeScript）
-1. AtomicDesign（React.js/TypeScript）
-1. Docker/Kubernetes/AWS/CI/CD
-1. 最終課題（インフラ構築、バックエンド開発、フロントエンド開発）
+1. 導入（初級）
+1. 学習環境構築（初級）
+1. HTML、CSS（初級）
+1. JavaScript（初級）
+1. Node.js/Express（初級）
+1. TypeScript（初級）
+1. React.js（初級）
+1. Git/CLI/MySQL（初級）
+1. Jest（単体テスト）（中級）
+1. Github/Jira/Confluence（応用課題の進捗やタスク管理）（中級）
+1. CleanArchitecture（Node.js/Express/TypeScript）（上級）
+1. AtomicDesign（React.js/TypeScript）（上級）
+1. Docker/Kubernetes/AWS/CI/CD（上級）
+1. 最終課題（インフラ構築、バックエンド開発、フロントエンド開発）（上級）
 
 ## 導入
 1. あいさつ
