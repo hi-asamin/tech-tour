@@ -1,5 +1,5 @@
 import React from 'react';
-import { DummyButton } from '../atom/dummy';
+import { DummyButton } from '../atoms/dummy';
 
 export const DummyMolecule = () => {
   return (

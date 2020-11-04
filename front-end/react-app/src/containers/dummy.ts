@@ -1,6 +1,6 @@
 import { dispatch } from 'store';
-import { DummyAction } from 'action/dummy';
-import { DummyFormValues } from 'model/dummy';
+import { DummyAction } from 'actions/dummy';
+import { DummyFormValues } from 'models/dummy';
 
 export const init = async () => {
   const dummy: DummyFormValues = {

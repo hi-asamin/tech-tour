@@ -2,10 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 
-import { DummyTemplate } from 'ui/component/template/dummy';
+import { DummyTemplate } from 'ui/components/templates/dummy';
 import { StateType } from 'store';
-import { DummyState } from 'model/dummy';
-import { MainProps } from 'ui/component/organism/dummy';
+import { DummyState } from 'models/dummy';
+import { MainProps } from 'ui/components/organisms/dummy';
 
 const dummySelector = createSelector(
   (state: ReturnType<StateType>) => state['ui/dummy'],

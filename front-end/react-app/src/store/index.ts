@@ -1,4 +1,4 @@
-import { DummySlice } from 'slice/dummy';
+import { DummySlice } from 'slices/dummy';
 
 import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';

@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 
-import { DummyState, DummyFormValues, DummyFormStatus } from 'model/dummy';
+import { DummyState, DummyFormValues, DummyFormStatus } from 'models/dummy';
 
 export const reducers = {
   updateDummyFormValueAction: (state: DummyState, action: PayloadAction<DummyFormValues>) => ({
