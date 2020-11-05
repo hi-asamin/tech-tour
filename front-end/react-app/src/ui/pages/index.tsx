@@ -15,7 +15,7 @@ export const Index = () => {
           <Link to='/curriculum/beginner/introduction'>イントロダクション</Link>
         </p>
         <p>
-          <Link to='/curriculum/beginner/javascript'>JavaScript学習</Link>
+          <Link to='/curriculum/beginner/javascript/overview'>JavaScript学習</Link>
         </p>
       </header>
     </div>
