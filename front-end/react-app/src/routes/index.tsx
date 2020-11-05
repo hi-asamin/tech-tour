@@ -3,9 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { Index } from 'ui/pages';
 import { CurriculumRoute } from 'routes/curriculum/curriculum-route';
-// import { JavaScriptRoute } from 'routes/curriculum/begginer/javascript/javascript-route';
 import { DummyPage } from 'ui/pages/dummy';
-import { NoMatch } from 'ui/pages/error/no-match';
+import { NotFound } from 'ui/pages/error/not-found';
 
 export const AppRoute = () => {
   return (
@@ -14,10 +13,9 @@ export const AppRoute = () => {
         <Switch>
           <Route exact path='/' component={Index} />
           <Route path='/curriculum' component={CurriculumRoute} />
-          {/* <Route path='/curriculum' component={JavaScriptRoute} /> */}
           <Route path='/dummy' component={DummyPage} />
+          <Route component={NotFound} />
         </Switch>
-        <Route component={NoMatch} />
       </Router>
     </div>
   );
