@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { BeginnerRoute } from 'routes/curriculum/begginer/beginner-route';
+import { IntroductionRoute } from './begginer/introduction-route';
+import { JavaScriptRoute } from './begginer/javascript-route';
 export const CurriculumRoute = () => {
   return (
     <React.Fragment>
-      <BeginnerRoute />
+      <IntroductionRoute />
+      <JavaScriptRoute />
     </React.Fragment>
   );
 }

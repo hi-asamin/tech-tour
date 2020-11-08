@@ -1,9 +1,11 @@
 import React from 'react';
 
-export const Index = () => {
+import { IntroductionIndexTemplate as Template } from 'ui/components/templates/curriculum/beginner/introduction';
+
+export const IntroductionIndexPage = () => {
   return (
     <>
-      <h1>ようこそジョースケへ</h1>
+      <Template />
     </>
   )
 };

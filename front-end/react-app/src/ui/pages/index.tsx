@@ -12,7 +12,7 @@ export const Index = () => {
           <Link to='/dummy'>ダミーページ</Link>
         </p>
         <p>
-          <Link to='/curriculum/beginner/introduction'>イントロダクション</Link>
+          <Link to='/curriculum/beginner/introduction'>ジョースケへようこそ</Link>
         </p>
         <p>
           <Link to='/curriculum/beginner/javascript/overview'>JavaScript学習</Link>

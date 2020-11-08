@@ -8,15 +8,13 @@ import { NotFound } from 'ui/pages/error/not-found';
 
 export const AppRoute = () => {
   return (
-    <div className='App'>
-      <Router>
-        <Switch>
-          <Route exact path='/' component={Index} />
-          <Route path='/curriculum' component={CurriculumRoute} />
-          <Route path='/dummy' component={DummyPage} />
-          <Route component={NotFound} />
-        </Switch>
-      </Router>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path='/' component={Index} />
+        <CurriculumRoute />
+        <Route path='/dummy' component={DummyPage} />
+        <Route component={NotFound} />
+      </Switch>
+    </Router>
   );
 }
