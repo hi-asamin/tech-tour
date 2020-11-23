@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { Overview } from 'ui/pages/curriculum/beginner/javascript/overview';
-import { Grammar } from 'ui/pages/curriculum/beginner/javascript/grammar';
+import { Overview } from 'ui/components/pages/curriculum/beginner/javascript/overview';
+import { Grammar } from 'ui/components/pages/curriculum/beginner/javascript/grammar';
 
 export const JavaScriptRoute = () => {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { IntroductionIndexPage } from 'ui/pages/curriculum/beginner/introduction';
+import { IntroductionIndexPage } from 'ui/components/pages/curriculum/beginner/introduction';
 
 export const IntroductionRoute = () => {
   return (

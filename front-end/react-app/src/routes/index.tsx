@@ -1,9 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { Index } from 'ui/pages';
+import { Index } from 'ui/components/pages';
 import { CurriculumRoute } from 'routes/curriculum/curriculum-route';
 import { DummyRoute } from 'routes/dummy-route';
+import { BookRoute } from 'routes/book';
 
 export const AppRoute = () => {
   return (
@@ -11,6 +12,7 @@ export const AppRoute = () => {
       <Route exact path='/' component={Index} />
       <CurriculumRoute />
       <DummyRoute />
+      <BookRoute />
     </Router>
   );
 }
