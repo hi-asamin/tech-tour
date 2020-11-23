@@ -1,0 +1,19 @@
+{
+  "type": "mysql",
+  "host": "rdb",
+  "port": 3306,
+  "username": "apluser",
+  "password": "apluser",
+  "database": "app_db",
+  "synchronize": true,
+  "logging": true,
+  "entities": [
+     "src/entity/**/*.ts"
+  ],
+  "migrations": [
+     "src/migration/**/*.ts"
+  ],
+  "subscribers": [
+     "src/subscriber/**/*.ts"
+  ]
+}
