@@ -1,0 +1,14 @@
+version: '3.5'
+services:
+  back-end:
+    build:
+      context: back-end
+    container_name: api-server
+    command: npm run dev
+    ports:
+      - "3080:3000"
+    environment:
+      TZ: "Asia/Tokyo"
+      NODE_ENV: development
+    volumes:
+      - ./back-end:/app
