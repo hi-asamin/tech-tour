@@ -2,18 +2,23 @@
   "type": "mysql",
   "host": "rdb",
   "port": 3306,
-  "username": "apluser",
-  "password": "apluser",
+  "username": "root",
+  "password": "root",
   "database": "app_db",
-  "synchronize": true,
+  "synchronize": false,
   "logging": true,
   "entities": [
-     "src/entity/**/*.ts"
+    "src/entity/**/*.ts"
   ],
   "migrations": [
-     "src/migration/**/*.ts"
+    "src/migration/**/*.ts"
   ],
   "subscribers": [
-     "src/subscriber/**/*.ts"
-  ]
+    "src/subscriber/**/*.ts"
+  ],
+  "cli": {
+    "entitiesDir": "src/entity",
+    "migrationsDir": "src/migration",
+    "subscribersDir": "src/subscriber"
+   }
 }

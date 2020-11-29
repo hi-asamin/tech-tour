@@ -1,6 +1,6 @@
-import { RequestBody } from './index';
+import { IRequestBody } from 'src/interface/index';
 
-export type BookRequestBody = RequestBody<Book>;
+export type TBookRequestBody = IRequestBody<Book>;
 
 export interface Book {
   title: string;
