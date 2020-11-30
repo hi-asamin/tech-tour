@@ -1,5 +1,6 @@
-// import { IBookRepository } from 'src/interface/database/book-repository';
-import { BookRepository } from 'src/repository/book-repository';
+import { Book } from '../entity/book';
+import { TBookRequestBody } from "src/interface/book";
+import { BookRepository } from "../repository/book-repository";
 
 export class BookService {
   private bookRepository: BookRepository;
@@ -8,12 +9,22 @@ export class BookService {
     this.bookRepository = bookRepository;
   }
 
-  public findAll() {
-    const result = this.bookRepository.findAll();
+  public async findAll(): Promise<Book[]> {
+    const result = await this.bookRepository.findAll();
     return result;
   }
 
-  // public create() {
-  //   this.bookRepository.addBook();
-  // }
+  public async create(body: TBookRequestBody): Promise<Book> {
+    const book: Book = await this.bookRepository.add(body);
+    return book;
+  }
+
+  public async update(id: number, body: TBookRequestBody): Promise<Book> {
+    const book: Book = await this.bookRepository.updateBook(id, body);
+    return book;
+  }
+
+  public async delete(id: number): Promise<void> {
+    await this.bookRepository.deleteBook(id);
+  }
 }

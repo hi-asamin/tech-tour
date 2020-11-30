@@ -1,26 +1,19 @@
-import { getRepository } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 import { Book } from '../entity/book';
 import { TBookRequestBody } from "src/interface/book";
-// import { BookService } from '../service/book-service';
-// import { BookRepository } from "../repository/book-repository";
+import { BookService } from '../service/book-service';
+import { BookRepository } from "../repository/book-repository";
 
 export class BookController {
   // private bookService: BookService;
-  // private bookRepository: BookRepository;
 
-  public constructor() {
-    // this.bookRepository = new BookRepository();
-    // this.bookService = new BookService(this.bookRepository);
-  }
+  // public constructor() {
+  //   this.bookService = new BookService(getCustomRepository(BookRepository));
+  // }
 
   public async findAll() {
-    // const result = {
-    //   method: 'GET',
-    //   message: 'called books get'
-    // };
-    // const result = this.bookService.findAll();
-    const bookRepository = getRepository(Book);
-    const result = await bookRepository.find();
+    const bookService = new BookService(getCustomRepository(BookRepository));
+    const result = await bookService.findAll();
     return result;
   }
 
@@ -33,30 +26,19 @@ export class BookController {
   }
 
   public async create(body: TBookRequestBody) {
-    // const result = {
-    //   ...body,
-    // };
-    const bookRepository = getRepository(Book);
-    const book: Book = new Book();
-    console.log(body);
-    book.title = body.title;
-    const result = await bookRepository.save(book);
+    const bookService = new BookService(getCustomRepository(BookRepository));
+    const result = await bookService.create(body);
     return result;
   }
 
   public async update(id: number, body: TBookRequestBody) {
-    const result = {
-      id: id,
-      body: body,
-    };
+    const bookService = new BookService(getCustomRepository(BookRepository));
+    const result = await bookService.update(id, body);
     return result;
   }
 
   public async delete(id: number) {
-    const result = {
-      method: 'DELETE',
-      message: 'called books delete id ' + id,
-    };
-    return result;
+    const bookService = new BookService(getCustomRepository(BookRepository));
+    await bookService.delete(id);
   }
 }

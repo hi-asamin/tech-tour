@@ -32,7 +32,7 @@ router.post(
   '/',
   async (req: Request, res: Response) => {
     const response = await bookController.create(req.body);
-    res.status(200).json(response);
+    res.status(201).json(response);
   }
 );
 
@@ -40,7 +40,7 @@ router.put(
   '/:id',
   async (req: Request, res: Response) => {
     const response = await bookController.update(Number(req.params.id), req.body);
-    res.status(200).json(response);
+    res.status(201).json(response);
   }
 );
 
@@ -48,7 +48,7 @@ router.delete(
   '/:id',
   async (req: Request, res: Response) => {
     const response = await bookController.delete(Number(req.params.id));
-    res.status(200).json(response);
+    res.status(201).json(response);
   }
 );
 

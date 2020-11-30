@@ -1,5 +1,4 @@
 import {
-  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -7,11 +6,12 @@ import {
   Timestamp,
   UpdateDateColumn,
  } from 'typeorm'
+import { TBookRequestBody } from '../interface/book';
 
 @Entity('books')
 export class Book {
   @PrimaryGeneratedColumn()
-  readonly id?: number;
+  id?: number;
 
   @Column({ type: 'varchar', length: 255 })
   title?: string;
@@ -35,4 +35,12 @@ export class Book {
   // レコードの更新時間, DATETIME(6)型
   @UpdateDateColumn()
   updated_at?: Timestamp;
+
+  constructor(book: TBookRequestBody) {
+    this.title = book?.title || '';
+    this.image = book?.image || '';
+    this.genre = String(book?.genre_id) || '';
+    this.chapters = book?.chapters.join(',') || '';
+    this.memo = book?.memo || '';
+  }
 }
