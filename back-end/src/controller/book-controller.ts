@@ -33,9 +33,14 @@ export class BookController {
   }
 
   public async create(body: TBookRequestBody) {
-    const result = {
-      ...body,
-    };
+    // const result = {
+    //   ...body,
+    // };
+    const bookRepository = getRepository(Book);
+    const book: Book = new Book();
+    console.log(body);
+    book.title = body.title;
+    const result = await bookRepository.save(book);
     return result;
   }
 
