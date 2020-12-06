@@ -1,4 +1,4 @@
-import { Book } from '../entity/book';
+import { Book } from '../domain/entity/book';
 import { TBookRequestBody } from "src/interface/book";
 import { BookRepository } from "../repository/book-repository";
 

@@ -6,7 +6,7 @@ import {
   Timestamp,
   UpdateDateColumn,
  } from 'typeorm'
-import { TBookRequestBody } from '../interface/book';
+import { TBookRequestBody } from '../../interface/book';
 
 @Entity('books')
 export class Book {

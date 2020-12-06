@@ -1,6 +1,6 @@
 import {EntityRepository, Repository} from "typeorm";
 
-import { Book } from '../entity/book';
+import { Book } from '../domain/entity/book';
 import { TBookRequestBody } from "../interface/book";
 
 @EntityRepository(Book)
