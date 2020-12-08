@@ -1,19 +1,16 @@
-import { getCustomRepository } from 'typeorm';
 import { Book } from '../domain/entity/book';
 import { TBookRequestBody } from "src/interface/book";
-import { BookService } from '../service/book-service';
-import { BookRepository } from "../repository/book-repository";
+import { BookInteractor } from '../usecase/book-interactor';
 
 export class BookController {
-  // private bookService: BookService;
+  private bookInteractor: BookInteractor;
 
-  // public constructor() {
-  //   this.bookService = new BookService(getCustomRepository(BookRepository));
-  // }
+  public constructor(bookInteractor: BookInteractor) {
+    this.bookInteractor = bookInteractor;
+  }
 
-  public async findAll() {
-    const bookService = new BookService(getCustomRepository(BookRepository));
-    const result = await bookService.findAll();
+  public async findAll(): Promise<Book[]> {
+    const result = await this.bookInteractor.findAll();
     return result;
   }
 
@@ -26,19 +23,16 @@ export class BookController {
   }
 
   public async create(body: TBookRequestBody) {
-    const bookService = new BookService(getCustomRepository(BookRepository));
-    const result = await bookService.create(body);
+    const result = await this.bookInteractor.create(body);
     return result;
   }
 
   public async update(id: number, body: TBookRequestBody) {
-    const bookService = new BookService(getCustomRepository(BookRepository));
-    const result = await bookService.update(id, body);
+    const result = await this.bookInteractor.update(id, body);
     return result;
   }
 
   public async delete(id: number) {
-    const bookService = new BookService(getCustomRepository(BookRepository));
-    await bookService.delete(id);
+    await this.bookInteractor.delete(id);
   }
 }

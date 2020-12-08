@@ -14,7 +14,7 @@ async function main() {
   //   console.log('app port is undefined');
   //   process.exit(1);
   // }
-  createConnection().then(connection => {
+  createConnection().then(() => {
 
     const app = express();
     

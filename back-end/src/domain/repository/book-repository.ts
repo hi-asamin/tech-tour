@@ -6,9 +6,9 @@ export interface IBookRepository {
 
   sampleCustomRawSelectQuery(id: number): Promise<Book[]>;
 
-  add(item: TBookRequestBody): Promise<Book | undefined>;
+  addBook(item: TBookRequestBody): Promise<Book>;
 
-  updateBook(id: number, item: TBookRequestBody): Promise<Book | undefined>;
+  updateBook(id: number, item: TBookRequestBody): Promise<Book>;
 
   deleteBook(id: number): Promise<void>;
 }

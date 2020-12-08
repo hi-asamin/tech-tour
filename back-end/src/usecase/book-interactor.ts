@@ -1,11 +1,11 @@
 import { Book } from '../domain/entity/book';
 import { TBookRequestBody } from "src/interface/book";
-import { BookRepository } from "../repository/book-repository";
+import { IBookRepository } from '../domain/repository/book-repository';
 
-export class BookService {
-  private bookRepository: BookRepository;
+export class BookInteractor {
+  private bookRepository: IBookRepository;
 
-  public constructor(bookRepository: BookRepository) {
+  constructor(bookRepository: IBookRepository) {
     this.bookRepository = bookRepository;
   }
 
@@ -15,7 +15,7 @@ export class BookService {
   }
 
   public async create(body: TBookRequestBody): Promise<Book> {
-    const book: Book = await this.bookRepository.add(body);
+    const book: Book = await this.bookRepository.addBook(body);
     return book;
   }
 

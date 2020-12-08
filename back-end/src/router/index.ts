@@ -1,7 +1,10 @@
 import { Express, Response } from 'express'
-import BookRouter from './book'
+import { router as BookRouter, initBookRouter } from './book';
 
 export function initRoutes(app: Express) {
+
+  initBookRouter();
+
   // ユーザー管理機能用エンドポイント
   app.use('/api/v1/books', BookRouter)
 

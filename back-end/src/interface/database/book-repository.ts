@@ -15,7 +15,7 @@ export class BookRepository extends Repository<Book> implements IBookRepository 
     // return this.query(`select * from books where id = $1`, [id]);
   }
 
-  async add(item: TBookRequestBody): Promise<Book> {
+  async addBook(item: TBookRequestBody): Promise<Book> {
     const book: Book = new Book(item);
     this.save(book);
     return book;

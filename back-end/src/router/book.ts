@@ -1,8 +1,17 @@
+import { getCustomRepository } from 'typeorm';
 import { Router, Request, Response } from 'express';
 import { BookController } from '../controller/book-controller';
+import { BookRepository } from '../interface/database/book-repository';
+import { BookInteractor } from '../usecase/book-interactor';
 
-const router = Router()
-const bookController: BookController = new BookController();
+let bookController: BookController;
+
+export const initBookRouter = () => {
+  const bookInteractor: BookInteractor = new BookInteractor(getCustomRepository(BookRepository));
+  bookController = new BookController(bookInteractor);
+}
+
+export const router = Router()
 
 router.get(
   '/',
@@ -51,5 +60,3 @@ router.delete(
     res.status(201).json(response);
   }
 );
-
-export default router
