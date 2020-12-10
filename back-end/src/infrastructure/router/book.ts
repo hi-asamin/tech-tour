@@ -1,8 +1,8 @@
 import { Connection, EntityManager } from 'typeorm';
 import { Router, Request, Response } from 'express';
-import { BookController } from '../controller/book-controller';
+import { BookController } from '../../interface/controller/book-controller';
 
-import { SqlConnection } from '../infrastructure/sqlhandler';
+import { SqlConnection } from '../sqlhandler';
 
 let bookController: BookController;
 
