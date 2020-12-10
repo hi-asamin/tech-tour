@@ -1,14 +1,15 @@
-import { getCustomRepository } from 'typeorm';
+import { Connection, EntityManager } from 'typeorm';
 import { Router, Request, Response } from 'express';
 import { BookController } from '../controller/book-controller';
-import { BookRepository } from '../interface/database/book-repository';
-import { BookInteractor } from '../usecase/book-interactor';
+
+import { SqlConnection } from '../infrastructure/sqlhandler';
 
 let bookController: BookController;
 
-export const initBookRouter = () => {
-  const bookInteractor: BookInteractor = new BookInteractor(getCustomRepository(BookRepository));
-  bookController = new BookController(bookInteractor);
+export const initBookRouter = async () => {
+  const connection: Connection = await SqlConnection.getConnection();
+  const manager: EntityManager = connection.manager;
+  bookController = new BookController(manager);
 }
 
 export const router = Router()

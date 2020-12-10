@@ -1,12 +1,16 @@
+import { EntityManager } from 'typeorm';
 import { Book } from '../domain/entity/book';
 import { TBookRequestBody } from "src/interface/book";
 import { BookInteractor } from '../usecase/book-interactor';
+import { BookRepository } from '../interface/database/book-repository';
 
 export class BookController {
   private bookInteractor: BookInteractor;
 
-  public constructor(bookInteractor: BookInteractor) {
-    this.bookInteractor = bookInteractor;
+  public constructor(manager: EntityManager) {
+    this.bookInteractor = new BookInteractor(
+      new BookRepository(manager)
+    )
   }
 
   public async findAll(): Promise<Book[]> {

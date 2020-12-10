@@ -5,8 +5,8 @@ import { json, urlencoded } from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import config from './config';
-import { connectionOptions, SqlConnection } from './infrastructure/sqlhandler';
+// import config from './config';
+// import { connectionOptions, SqlConnection } from './infrastructure/sqlhandler';
 import * as router from './router/index';
 
 async function main() {
@@ -14,7 +14,7 @@ async function main() {
   //   console.log('app port is undefined');
   //   process.exit(1);
   // }
-  createConnection().then(() => {
+  // createConnection().then(() => {
 
     const app = express();
     
@@ -42,7 +42,7 @@ async function main() {
   
     // }).catch(error => console.log("TypeORM connection error: ", error));
     router.initRoutes(app);
-  }).catch(error => console.error(error));
+  // }).catch(error => console.error(error));
 }
 
 main();
