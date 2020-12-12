@@ -13,6 +13,7 @@ Content-Type: application/json
 
 {
   "title": "sample",
+  "author": "asamin",
   "image": "sample.png",
   "genre_id": 1,
   "chapters": ["序章", "最終章"],
@@ -28,7 +29,7 @@ Content-Type: application/json
   "title": "sample_updated",
   "image": "sample.png",
   "genre_id": 1,
-  "chapters": ["序章", "最終章"],
+  "chapters": ["序章", "最終章1"],
   "memo": ""
 }
 
