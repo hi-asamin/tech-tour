@@ -12,16 +12,8 @@ export class BookRepository implements IBookRepository {
   constructor(private manager: EntityManager) {}
 
   async findAll(): Promise<Book[]> {
-    return await this.manager.find(Book, { relations: ['m_genre', 't_chapter'] });
+    return await this.manager.find(Book);
   }
-
-  // async findAll(): Promise<Book[]> {
-  //   return await this.manager.getRepository(Book)
-  //           .createQueryBuilder('m_book')
-  //           .leftJoinAndSelect('m_book.chapters', 't_chapter')
-  //           .leftJoinAndSelect('m_book.genre', 'm_genre')
-  //           .getMany();
-  // }
 
   async sampleCustomRawSelectQuery(id: number): Promise<Book[]> {
     return this.manager.query(`select * from books where id = ${id}`);
@@ -43,12 +35,6 @@ export class BookRepository implements IBookRepository {
   }
 
   async update(id: number, item: TBookRequestBody): Promise<Book | undefined> {
-    // const chapters: Chapter[] = await item.chapters.map(async chapter => {
-    //   return await this.manager.create(Chapter, {
-    //     book_id: 1,
-    //     chapter: chapter,
-    //   });
-    // })
     const book: Book | undefined = await this.manager.findOne(Book, id);
     if (!book) {
       return;

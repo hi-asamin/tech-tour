@@ -31,6 +31,7 @@ export class Book {
 
   @ManyToOne(() => Genrue, genre => genre.books, {
     onDelete: 'CASCADE',
+    eager: true,
   })
   @JoinColumn([{
     name: 'genre_id',
@@ -40,7 +41,7 @@ export class Book {
 
   @OneToMany(() => Chapter, chapter => chapter.book, {
     cascade: true,
-    eager: true
+    eager: true,
   })
   chapters?: Chapter[];
 
