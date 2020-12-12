@@ -19,8 +19,9 @@ export class BookInteractor {
     return book;
   }
 
-  public async update(id: number, body: TBookRequestBody): Promise<Book> {
-    const book: Book = await this.bookRepository.update(id, body);
+  public async update(id: number, body: TBookRequestBody): Promise<Book | undefined> {
+    // TODO 更新対象が存在しない場合は例外にする？
+    const book: Book | undefined = await this.bookRepository.update(id, body);
     return book;
   }
 

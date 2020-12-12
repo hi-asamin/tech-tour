@@ -26,6 +26,9 @@ export class Book {
   @Column({ nullable: true })
   image?: string;
 
+  @Column()
+  genre_id?: number;
+
   @ManyToOne(() => Genrue, genre => genre.books, {
     onDelete: 'CASCADE',
   })
@@ -35,8 +38,9 @@ export class Book {
   }])
   genre?: Genrue;
 
-  @OneToMany(() => Chapter, chapter => chapter.book_id, {
+  @OneToMany(() => Chapter, chapter => chapter.book, {
     cascade: true,
+    eager: true
   })
   chapters?: Chapter[];
 

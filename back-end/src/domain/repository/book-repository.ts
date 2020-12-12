@@ -8,7 +8,7 @@ export interface IBookRepository {
 
   save(item: TBookRequestBody): Promise<Book>;
 
-  update(id: number, item: TBookRequestBody): Promise<Book>;
+  update(id: number, item: TBookRequestBody): Promise<Book | undefined>;
 
   delete(id: number): Promise<void>;
 }
