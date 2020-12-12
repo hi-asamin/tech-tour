@@ -27,9 +27,10 @@ Content-Type: application/json
 
 {
   "title": "sample_updated",
+  "author": "asamin2",
   "image": "sample.png",
   "genre_id": 1,
-  "chapters": ["序章", "最終章1"],
+  "chapters": ["序章", "最終章1", "最終章2"],
   "memo": ""
 }
 

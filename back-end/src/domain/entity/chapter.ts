@@ -18,7 +18,7 @@ export class Chapter {
   @ManyToOne(() => Book, book => book.chapters)
   @JoinColumn([{
     name: 'book_id',
-    referencedColumnName: 'id'
+    referencedColumnName: 'id',
   }])
   @Column()
   book_id?: number;

@@ -12,11 +12,11 @@ export class BookRepository implements IBookRepository {
   constructor(private manager: EntityManager) {}
 
   // async findAll(): Promise<Book[]> {
-  //   return this.manager.find(Book, { relations: ['m_genre', 't_chapter'] });
+  //   return await this.manager.find(Book, { relations: ['m_genre', 't_chapter'] });
   // }
 
   async findAll(): Promise<Book[]> {
-    return this.manager.getRepository(Book)
+    return await this.manager.getRepository(Book)
             .createQueryBuilder('m_book')
             .leftJoinAndSelect('m_book.chapters', 't_chapter')
             .leftJoinAndSelect('m_book.genre', 'm_genre')
@@ -36,18 +36,21 @@ export class BookRepository implements IBookRepository {
     genre.id = item.genre_id;
     const book: Book = new Book(item.title, item.author, item.image, genre, chapters, item.memo);
     book.chapters = chapters;
-    this.manager.save(book);
+    await this.manager.save(book);
     return book;
   }
 
   async updateBook(id: number, item: TBookRequestBody): Promise<Book> {
+    const preChapters: Chapter[] = await this.manager.find(Chapter, { where: { book_id: id } });
+    this.manager.remove(Chapter, preChapters);
     const chapters: Chapter[] = item.chapters.map(chapter => {
       return new Chapter(chapter);
     })
     const genre: Genrue = new Genrue();
     genre.id = item.genre_id;
     const book: Book = new Book(item.title, item.author, item.image, genre, chapters, item.memo);
-    this.manager.update(Book, id, book);
+    book.id = id;
+    this.manager.save(book);
     return book;
   }
 

@@ -26,9 +26,6 @@ export class Book {
   @Column({ nullable: true })
   image?: string;
 
-  @Column()
-  genre_id?: number;
-
   @ManyToOne(() => Genrue, genre => genre.books)
   @JoinColumn([{
     name: 'genre_id',

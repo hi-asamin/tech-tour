@@ -18,7 +18,7 @@ export class Genrue {
   @Column()
   genre?: string;
 
-  @OneToMany(() => Book, book => book.genre_id)
+  @OneToMany(() => Book, book => book.genre)
   books?: Book[];
 
   // レコードの作成時間, DATETIME(6)型
