@@ -27,7 +27,7 @@ Content-Type: application/json
 
 {
   "title": "sample_updated",
-  "author": "asamin2",
+  "author": "",
   "image": "sample.png",
   "genre_id": 1,
   "chapters": ["序章", "最終章1", "最終章2"],
@@ -36,4 +36,4 @@ Content-Type: application/json
 
 ###
 @name = deleteBook
-DELETE {{host}}:{{port}}{{base_path}}/books/5 HTTP/1.1
+DELETE {{host}}:{{port}}{{base_path}}/books/2 HTTP/1.1

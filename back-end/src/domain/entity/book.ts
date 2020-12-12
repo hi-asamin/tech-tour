@@ -26,7 +26,9 @@ export class Book {
   @Column({ nullable: true })
   image?: string;
 
-  @ManyToOne(() => Genrue, genre => genre.books)
+  @ManyToOne(() => Genrue, genre => genre.books, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn([{
     name: 'genre_id',
     referencedColumnName: 'id'

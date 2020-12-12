@@ -15,17 +15,20 @@ export class Chapter {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @ManyToOne(() => Book, book => book.chapters)
+  @ManyToOne(() => Book, book => book.chapters, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
   @JoinColumn([{
     name: 'book_id',
     referencedColumnName: 'id',
   }])
   @Column()
   book_id?: number;
-
+  
   @Column()
   chapter?: string;
-
+  
   // レコードの作成時間, DATETIME(6)型
   @CreateDateColumn()
   created_at?: Timestamp;

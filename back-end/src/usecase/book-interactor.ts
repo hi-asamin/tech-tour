@@ -15,16 +15,16 @@ export class BookInteractor {
   }
 
   public async create(body: TBookRequestBody): Promise<Book> {
-    const book: Book = await this.bookRepository.addBook(body);
+    const book: Book = await this.bookRepository.save(body);
     return book;
   }
 
   public async update(id: number, body: TBookRequestBody): Promise<Book> {
-    const book: Book = await this.bookRepository.updateBook(id, body);
+    const book: Book = await this.bookRepository.update(id, body);
     return book;
   }
 
   public async delete(id: number): Promise<void> {
-    await this.bookRepository.deleteBook(id);
+    await this.bookRepository.delete(id);
   }
 }
