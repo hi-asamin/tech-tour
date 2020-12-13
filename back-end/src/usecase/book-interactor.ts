@@ -1,5 +1,5 @@
 import { Book } from '../domain/entity/book';
-import { TBookRequestBody } from "src/interface/book";
+import { BookRequestDTO } from "~/src/interface/dto/book.dto";
 import { IBookRepository } from '../domain/repository/book-repository';
 
 export class BookInteractor {
@@ -14,12 +14,12 @@ export class BookInteractor {
     return result;
   }
 
-  public async create(body: TBookRequestBody): Promise<Book> {
+  public async create(body: BookRequestDTO): Promise<Book> {
     const book: Book = await this.bookRepository.save(body);
     return book;
   }
 
-  public async update(id: number, body: TBookRequestBody): Promise<Book | undefined> {
+  public async update(id: number, body: BookRequestDTO): Promise<Book | undefined> {
     // TODO 更新対象が存在しない場合は例外にする？
     const book: Book | undefined = await this.bookRepository.update(id, body);
     return book;

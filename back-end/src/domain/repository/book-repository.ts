@@ -1,4 +1,4 @@
-import { TBookRequestBody } from '~/src/interface/book';
+import { BookRequestDTO } from '~/src/interface/dto/book.dto';
 import { Book } from '../entity/book';
 
 export interface IBookRepository {
@@ -6,9 +6,9 @@ export interface IBookRepository {
 
   findOne(id: number): Promise<Book | undefined>;
 
-  save(item: TBookRequestBody): Promise<Book>;
+  save(item: BookRequestDTO): Promise<Book>;
 
-  update(id: number, item: TBookRequestBody): Promise<Book | undefined>;
+  update(id: number, item: BookRequestDTO): Promise<Book | undefined>;
 
   delete(id: number): Promise<void>;
 }

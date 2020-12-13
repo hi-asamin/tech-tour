@@ -1,4 +1,4 @@
-export type TBookRequestBody = {
+export type BookRequestDTO = {
   title: string;
   author: string;
   image: string;

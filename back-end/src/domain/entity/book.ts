@@ -10,7 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { Chapter } from './chapter';
-import { Genrue } from './genre';
+import { Genre } from './genre';
 
 @Entity('m_book')
 export class Book {
@@ -29,7 +29,7 @@ export class Book {
   @Column()
   genre_id?: number;
 
-  @ManyToOne(() => Genrue, genre => genre.books, {
+  @ManyToOne(() => Genre, genre => genre.books, {
     onDelete: 'CASCADE',
     eager: true,
   })
@@ -37,7 +37,7 @@ export class Book {
     name: 'genre_id',
     referencedColumnName: 'id'
   }])
-  genre?: Genrue;
+  genre?: Genre;
 
   @OneToMany(() => Chapter, chapter => chapter.book, {
     cascade: true,
@@ -57,7 +57,7 @@ export class Book {
   updated_at?: Timestamp;
 
 
-  constructor(title: string, author: string, image: string, genre: Genrue, chapters: Chapter[], memo: string) {
+  constructor(title: string, author: string, image: string, genre: Genre, chapters: Chapter[], memo: string) {
     this.title = title;
     this.author = author;
     this.image = image;

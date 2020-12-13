@@ -1,6 +1,6 @@
 import { EntityManager } from 'typeorm';
 import { Book } from '../../domain/entity/book';
-import { TBookRequestBody } from "src/interface/book";
+import { BookRequestDTO } from "~/src/interface/dto/book.dto";
 import { BookInteractor } from '../../usecase/book-interactor';
 import { BookRepository } from '../database/book-repository';
 
@@ -26,12 +26,12 @@ export class BookController {
     return result;
   }
 
-  public async create(body: TBookRequestBody) {
+  public async create(body: BookRequestDTO) {
     const result = await this.bookInteractor.create(body);
     return result;
   }
 
-  public async update(id: number, body: TBookRequestBody) {
+  public async update(id: number, body: BookRequestDTO) {
     const result = await this.bookInteractor.update(id, body);
     return result;
   }

@@ -2,7 +2,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   Timestamp,
@@ -11,7 +10,7 @@ import {
 import { Book } from './book';
 
 @Entity('m_genre')
-export class Genrue {
+export class Genre {
   @PrimaryGeneratedColumn()
   id?: number;
 

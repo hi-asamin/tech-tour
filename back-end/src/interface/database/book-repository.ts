@@ -1,10 +1,10 @@
 import { EntityManager, EntityRepository } from "typeorm";
 
 import { Book } from '../../domain/entity/book';
-import { Genrue } from '../../domain/entity/genre';
+import { Genre } from '../../domain/entity/genre';
 import { Chapter } from '../../domain/entity/chapter';
 import { IBookRepository } from "~/src/domain/repository/book-repository";
-import { TBookRequestBody } from "../../interface/book";
+import { BookRequestDTO } from "../dto/book.dto";
 
 @EntityRepository()
 export class BookRepository implements IBookRepository {
@@ -19,21 +19,20 @@ export class BookRepository implements IBookRepository {
     return await this.manager.findOne(Book, id);
   }
 
-  async save(item: TBookRequestBody): Promise<Book> {
+  async save(item: BookRequestDTO): Promise<Book> {
     const chapters: Chapter[] = item.chapters.map(chapter => {
       return new Chapter(chapter);
     })
     // TODO 存在しないジャンルIDが指定された場合動作する？
-    const genre: Genrue = await this.manager.create(Genrue, {
+    const genre: Genre = await this.manager.create(Genre, {
       id: item.genre_id
     })
     const book: Book = new Book(item.title, item.author, item.image, genre, chapters, item.memo);
     book.chapters = chapters;
-    await this.manager.save(book);
     return await this.manager.save(book);
   }
 
-  async update(id: number, item: TBookRequestBody): Promise<Book | undefined> {
+  async update(id: number, item: BookRequestDTO): Promise<Book | undefined> {
     // 一旦更新前の目次を全削除
     return await this.manager.transaction(async transactionalEntityManager => {
       const preChapters: Chapter[] | undefined = await transactionalEntityManager.find(Chapter, { where: { book_id: id } });
@@ -44,7 +43,7 @@ export class BookRepository implements IBookRepository {
       const chapters: Chapter[] = item.chapters.map(chapter => {
         return new Chapter(chapter);
       })
-      const genre: Genrue = await transactionalEntityManager.create(Genrue, {
+      const genre: Genre = await transactionalEntityManager.create(Genre, {
         id: item.genre_id
       })
       const book: Book = await transactionalEntityManager.create(Book, {
