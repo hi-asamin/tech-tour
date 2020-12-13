@@ -4,7 +4,7 @@ import { Book } from '../entity/book';
 export interface IBookRepository {
   findAll(): Promise<Book[]>;
 
-  sampleCustomRawSelectQuery(id: number): Promise<Book[]>;
+  findOne(id: number): Promise<Book | undefined>;
 
   save(item: TBookRequestBody): Promise<Book>;
 

@@ -9,15 +9,14 @@ import { TBookRequestBody } from "../../interface/book";
 @EntityRepository()
 export class BookRepository implements IBookRepository {
 
-  constructor(private manager: EntityManager) {}
+  constructor(private manager: EntityManager) {};
 
   async findAll(): Promise<Book[]> {
     return await this.manager.find(Book);
   }
 
-  async sampleCustomRawSelectQuery(id: number): Promise<Book[]> {
-    return this.manager.query(`select * from books where id = ${id}`);
-    // return this.query(`select * from books where id = $1`, [id]);
+  async findOne(id: number): Promise<Book | undefined> {
+    return await this.manager.findOne(Book, id);
   }
 
   async save(item: TBookRequestBody): Promise<Book> {
@@ -35,25 +34,30 @@ export class BookRepository implements IBookRepository {
   }
 
   async update(id: number, item: TBookRequestBody): Promise<Book | undefined> {
-    const book: Book | undefined = await this.manager.findOne(Book, id);
-    if (!book) {
-      return;
-    }
-    console.log(book);
-    if (!book.chapters) {
-      book.chapters = [];
-    }
-    for (const chapter of item.chapters) {
-      book.chapters.push(await this.manager.create(Chapter, {
-        book_id: id,
-        chapter
-      }))
-    }
-    const genre: Genrue = await this.manager.create(Genrue, {
-      id: item.genre_id
+    // 一旦更新前の目次を全削除
+    return await this.manager.transaction(async transactionalEntityManager => {
+      const preChapters: Chapter[] | undefined = await transactionalEntityManager.find(Chapter, { where: { book_id: id } });
+      if (preChapters) {
+        await transactionalEntityManager.remove(preChapters);
+      }
+      // 更新後の目次を作成
+      const chapters: Chapter[] = item.chapters.map(chapter => {
+        return new Chapter(chapter);
+      })
+      const genre: Genrue = await transactionalEntityManager.create(Genrue, {
+        id: item.genre_id
+      })
+      const book: Book = await transactionalEntityManager.create(Book, {
+        id,
+        title: item.title,
+        author: item.author,
+        image: item.image,
+        genre,
+        chapters,
+        memo: item.memo
+      })
+      return await transactionalEntityManager.save(book);
     })
-    book.genre = genre;
-    return await this.manager.save(book);
   }
 
   async delete(id: number): Promise<void> {
