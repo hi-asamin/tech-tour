@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import * as Usecase from 'containers/dummy';
+import * as Usecase from 'usecases/dummy';
 import { DummyState } from 'models/dummy';
 
 export interface MainProps {

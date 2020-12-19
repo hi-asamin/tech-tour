@@ -19,11 +19,7 @@ export class BookController {
   }
 
   public async findOne(id: number) {
-    const result = {
-      method: 'GET',
-      message: 'called books get id ' + id,
-    };
-    return result;
+    return this.bookInteractor.findOne(id);
   }
 
   public async create(body: BookRequestDTO) {

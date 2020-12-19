@@ -14,6 +14,10 @@ export class BookInteractor {
     return result;
   }
 
+  public async findOne(id: number): Promise<Book | undefined> {
+    return await this.bookRepository.findOne(id);
+  }
+
   public async create(body: BookRequestDTO): Promise<Book> {
     const book: Book = await this.bookRepository.save(body);
     return book;
