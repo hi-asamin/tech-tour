@@ -2,7 +2,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-import { DummyAPIPostData, DummyResponse, DummyState, DummyFormValues, DummyFormStatus } from 'domain/api/model/dummy';
+import { DummyAPIPostData, DummyResponse, DummyState, DummyFormValues, DummyFormStatus } from 'domain/ui/models/dummy';
 
 const headers = {
   'Content-Type': 'application/json',

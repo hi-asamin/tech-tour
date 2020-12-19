@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { initialDummyState } from 'models/dummy';
-import { reducers } from 'reducers/dummy';
+import { initialDummyState } from 'domain/ui/models/dummy';
+import { reducers } from 'domain/ui/service/dummy';
 
 export const DummySlice = createSlice({
   name: 'ui/dummy',

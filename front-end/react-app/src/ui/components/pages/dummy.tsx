@@ -4,7 +4,7 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import { DummyTemplate } from 'ui/components/templates/dummy';
 import { StateType } from 'store';
-import { DummyState } from 'models/dummy';
+import { DummyState } from 'domain/ui/models/dummy';
 import { MainProps } from 'ui/components/organisms/dummy';
 
 const dummySelector = createSelector(
