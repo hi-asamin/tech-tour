@@ -30,11 +30,20 @@ export async function deleteById(id: number): Promise<void> {
 }
 
 export const reducers = {
+  fetchBookIndexStateAction: (state: BookIndexState) => ({
+    ...state,
+    loading: false,
+  }),
   updateBookIndexStateAction: (state: BookIndexState, action: PayloadAction<BookIndexState>) => ({
     ...state,
-    loading: action.payload.loading,
+    loading: false,
     books: action.payload.books,
-    status: action.payload.status,
+    status: Status.success,
+  }),
+  failedBookIndexStateAction: (state: BookIndexState) => ({
+    ...state,
+    loading: false,
+    status: Status.failed,
   }),
   clearBookIndexStateAction: (state: BookIndexState): BookIndexState => ({
     ...state,

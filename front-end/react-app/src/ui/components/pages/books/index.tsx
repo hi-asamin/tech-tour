@@ -7,6 +7,8 @@ import { StateType } from 'store';
 import { BookIndexState } from 'domain/api/models/book';
 import * as Usecase from 'usecases/book';
 
+import { BookList } from 'ui/components/pages/books/list';
+
 import Button from '@material-ui/core/Button';
 import GenericTemplate from 'ui/components/templates/common/GenericTemplate';
 
@@ -27,12 +29,12 @@ export const IndexPage = () => {
   return (
     <React.Fragment>
       <GenericTemplate title='本一覧'>
-        <div style={{width: 600, margin: '0 0 0 auto'}}>
+        <div style={{width: 600, margin: '0 0 2rem auto'}}>
           <Button variant="contained" color="primary" onClick={onCreate} >
             新規登録
           </Button>
         </div>
-        {bookIndex.books}
+        <BookList books={bookIndex.books} />
       </GenericTemplate>
     </React.Fragment>
   )
