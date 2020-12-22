@@ -4,9 +4,6 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { BookRequest, BookResponse, BookIndexState, Status } from 'domain/api/models/book';
 
 const uri = '/books';
-const headers = {
-  'Content-Type': 'application/json',
-}
 
 export async function findAll(): Promise<BookResponse[]> {
   const res: AxiosResponse<BookResponse[]> = await axios.get(uri);
@@ -19,12 +16,12 @@ export async function findOne(id: number): Promise<BookResponse> {
 }
 
 export async function create(body: BookRequest): Promise<BookResponse> {
-  const res: AxiosResponse<BookResponse> = await axios.post(uri, body, {headers});
+  const res: AxiosResponse<BookResponse> = await axios.post(uri, body);
   return res.data;
 }
 
 export async function update(id: number, body: BookRequest): Promise<BookResponse> {
-  const res: AxiosResponse<BookResponse> = await axios.post(`${uri}/${id}`, body, {headers});
+  const res: AxiosResponse<BookResponse> = await axios.post(`${uri}/${id}`, body);
   return res.data;
 }
 

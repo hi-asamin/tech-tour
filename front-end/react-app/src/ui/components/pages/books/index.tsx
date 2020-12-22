@@ -28,7 +28,7 @@ export const IndexPage = () => {
     <React.Fragment>
       <GenericTemplate title='本一覧'>
         <div style={{width: 600, margin: '0 0 0 auto'}}>
-          <Button variant="contained" color="primary" onClick={onCreate}>
+          <Button variant="contained" color="primary" onClick={onCreate} >
             新規登録
           </Button>
         </div>
