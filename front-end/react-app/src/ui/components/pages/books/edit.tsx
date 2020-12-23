@@ -15,7 +15,7 @@ export const EditPage = () => {
   }
   return (
     <React.Fragment>
-      <GenericTemplate title='登録情報編集'>
+      <GenericTemplate>
         <Button variant="contained" onClick={onBackPage}>
           戻る
         </Button>

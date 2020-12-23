@@ -28,7 +28,7 @@ export const IndexPage = () => {
   }
   return (
     <React.Fragment>
-      <GenericTemplate title='本一覧'>
+      <GenericTemplate>
         <div style={{width: 600, margin: '0 0 2rem auto'}}>
           <Button variant="contained" color="primary" onClick={onCreate} >
             新規登録

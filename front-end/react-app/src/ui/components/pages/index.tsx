@@ -6,7 +6,7 @@ import logo from '../../../logo.svg';
 
 export const Index = () => {
   return (
-    <GenericTemplate title=''>
+    <GenericTemplate>
       <div>
         <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />

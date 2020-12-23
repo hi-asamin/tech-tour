@@ -25,7 +25,7 @@ export const CreatePage = () => {
   };
   return (
     <React.Fragment>
-      <GenericTemplate title='新規登録'>
+      <GenericTemplate>
         {/* タイトル：テキストフィールド */}
         {/* 画像 */}
         {/* ジャンル：セレクトボックス */}
