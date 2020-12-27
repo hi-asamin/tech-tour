@@ -20,9 +20,9 @@ export class BookRepository implements IBookRepository {
   }
 
   async save(item: BookRequestDTO): Promise<Book> {
-    const chapters: Chapter[] = item.chapters.map(chapter => {
+    const chapters: Chapter[] = item.chapters ? item.chapters.map(chapter => {
       return new Chapter(chapter.chapter);
-    })
+    }) : [];
     // TODO 存在しないジャンルIDが指定された場合動作する？
     const genre: Genre = await this.manager.create(Genre, {
       id: item.genre_id
