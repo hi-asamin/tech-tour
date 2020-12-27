@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
-import GenericTemplate from 'ui/components/templates/common/GenericTemplate';
+import GenericTemplate from 'ui/components/templates/common/generic-template';
 
 import logo from '../../../logo.svg';
 

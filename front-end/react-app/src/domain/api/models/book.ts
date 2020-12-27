@@ -1,8 +1,8 @@
-export type BookRequest = {
+export interface BookRequest {
   title: string;
   author: string;
   image: string;
-  genre_id: number;
+  genre_id?: number;
   chapters: string[];
   memo: string;
 }
@@ -26,10 +26,10 @@ export type Genre = {
 }
 
 export type Chapter = {
-  id: number;
+  id?: number;
   chapter: string;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export type BookIndexState = {

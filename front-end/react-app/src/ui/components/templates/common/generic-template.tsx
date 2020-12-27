@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     container: {
       paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
+      paddingBottom: theme.spacing(8),
     },
   }),
 );
@@ -119,7 +119,9 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
       </Drawer>
       <main className={classes.content}>
         <Container maxWidth="lg" className={classes.container}>
-          {children}
+          <div style={{ paddingTop: "2rem" }}>
+            {children}
+          </div>
           <Box pt={4}>
             <Copyright />
           </Box>
