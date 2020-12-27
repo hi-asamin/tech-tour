@@ -12,11 +12,11 @@ POST {{host}}:{{port}}{{base_path}}/books HTTP/1.1
 Content-Type: application/json
 
 {
-  "title": "sample",
+  "title": "sample1",
   "author": "asamin",
   "image": "sample.png",
   "genre_id": 1,
-  "chapters": ["序章", "最終章"],
+  "chapters": [ {"chapter":"序章1"}, {"chapter":"最終章1"}],
   "memo": ""
 }
 

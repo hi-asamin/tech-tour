@@ -19,8 +19,12 @@ export class BookInteractor {
   }
 
   public async create(body: BookRequestDTO): Promise<Book> {
-    const book: Book = await this.bookRepository.save(body);
-    return book;
+    try {
+      const book: Book = await this.bookRepository.save(body);
+      return book;
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 
   public async update(id: number, body: BookRequestDTO): Promise<Book | undefined> {

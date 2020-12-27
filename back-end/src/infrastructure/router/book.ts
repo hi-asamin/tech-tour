@@ -25,8 +25,12 @@ router.get(
 router.get(
   '/:id',
   async (req: Request, res: Response) => {
-    const response = await bookController.findOne(Number(req.params.id));
-    res.status(200).json(response);
+    try {
+      const response = await bookController.findOne(Number(req.params.id));
+      res.status(200).json(response);
+    } catch (e) {
+      res.status(500).json({ error: { message: 'failed' } });
+    }
   }
 );
 

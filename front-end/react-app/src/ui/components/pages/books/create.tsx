@@ -3,7 +3,8 @@ import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
 
 import { Chapters } from 'ui/components/pages/books/chapters';
-import { BookRequest, Chapter } from 'domain/api/models/book';
+import * as Usecase from 'usecases/book';
+import { BookRequest } from 'domain/api/models/book';
 
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -26,6 +27,12 @@ export const CreatePage = () => {
   }
   const onSubmit = (data: BookRequest) => {
     alert(JSON.stringify(data));
+    try {
+      Usecase.postBook(data);
+      history.push('/book');
+    } catch (e) {
+      alert(e);
+    }
   }
   const addChapter = () => {
     append({ chapter: '' })
@@ -102,6 +109,7 @@ export const CreatePage = () => {
             name='genre_id'
             ref={formHooks.register}
             control={formHooks.control}
+            defaultValue={1}
             value={age}
             onChange={handleChange}
             label="Age"

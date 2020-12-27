@@ -26,7 +26,7 @@ export const Chapters = (props: ChaptersProps) => {
               <Controller
                 as={TextField}
                 label={`目次 ${index+1}`}
-                name={`chapters[${index}].chpater`}
+                name={`chapters[${index}].chapter`}
                 ref={formHooks.register}
                 control={formHooks.control}
                 defaultValue=''

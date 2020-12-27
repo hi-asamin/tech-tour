@@ -23,8 +23,12 @@ export class BookController {
   }
 
   public async create(body: BookRequestDTO) {
-    const result = await this.bookInteractor.create(body);
-    return result;
+    try {
+      const result = await this.bookInteractor.create(body);
+      return result;
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 
   public async update(id: number, body: BookRequestDTO) {

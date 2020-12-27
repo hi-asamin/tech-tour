@@ -3,6 +3,10 @@ export type BookRequestDTO = {
   author: string;
   image: string;
   genre_id: number;
-  chapters: string[];
+  chapters: Chapter[];
   memo: string;
+}
+
+export type Chapter = {
+  chapter: string;
 }
