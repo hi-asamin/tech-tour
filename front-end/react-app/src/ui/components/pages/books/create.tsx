@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
 
 import { Chapters } from 'ui/components/pages/books/chapters';
@@ -22,7 +22,7 @@ export const CreatePage = () => {
     history.push('/book');
   }
   const onSubmit = (data: BookRequest) => {
-    console.log(data);
+    alert(JSON.stringify(data));
   }
   const addChapters = () => {
     const newChapters: Chapter[] = [...chapters];
@@ -42,11 +42,13 @@ export const CreatePage = () => {
       <Typography gutterBottom variant="h3" component="h2">書籍登録</Typography>
       <form onSubmit={formHooks.handleSubmit(onSubmit)} encType='multipart/form-data'>
         <div style={{width: 600, margin: 'auto', display: 'flex', flexDirection: 'column'}} >
-          <TextField
+          <Controller
+            as={TextField}
             required
             label='タイトル'
             name='title'
             ref={formHooks.register}
+            control={formHooks.control}
             margin="normal"
             fullWidth
             InputLabelProps={{
@@ -55,11 +57,13 @@ export const CreatePage = () => {
             variant='outlined'
             placeholder='本のタイトルを入力してください'
           />
-          <TextField
+          <Controller
+            as={TextField}
             required
             label='著者'
             name='author'
             ref={formHooks.register}
+            control={formHooks.control}
             margin="normal"
             fullWidth
             InputLabelProps={{
@@ -78,9 +82,11 @@ export const CreatePage = () => {
           />
           <FormControl variant="outlined">
             <InputLabel shrink>ジャンル</InputLabel>
-            <Select
+            <Controller
+              as={Select}
               name='genre_id'
               ref={formHooks.register}
+              control={formHooks.control}
               value={age}
               onChange={handleChange}
               label="Age"
@@ -88,10 +94,10 @@ export const CreatePage = () => {
               <MenuItem>
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={10}>政治・経済</MenuItem>
-              <MenuItem value={20}>雑学</MenuItem>
-              <MenuItem value={30}>ゴミ</MenuItem>
-            </Select>
+              <MenuItem value={1}>政治・経済</MenuItem>
+              <MenuItem value={1}>雑学</MenuItem>
+              <MenuItem value={1}>ゴミ</MenuItem>
+            </Controller>
           </FormControl>
           <Chapters
             chapters={chapters}
@@ -99,10 +105,12 @@ export const CreatePage = () => {
             removeChapters={removeChapters}
             formHooks={formHooks}
           />
-          <TextField
+          <Controller
+            as={TextField}
             label="メモ"
             name='memo'
             ref={formHooks.register}
+            control={formHooks.control}
             multiline
             rows={4}
             fullWidth

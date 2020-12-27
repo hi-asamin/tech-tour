@@ -1,5 +1,5 @@
 import React from 'react';
-import { UseFormMethods } from "react-hook-form";
+import { Controller, UseFormMethods } from "react-hook-form";
 
 import { BookRequest, Chapter } from 'domain/api/models/book';
 
@@ -39,15 +39,17 @@ export const Chapters = (props: ChaptersProps) => {
 
 const ChapterFields = (props: ChapterFieldsProps) => {
   const { chapter, index, removeChapters, formHooks } = props;
-  const fieldPrefix = `chapters[${chapter}]`;
+  const fieldPrefix = `chapters[${index}].chpater`;
   return (
     <>
       <InputLabel>目次: {index + 1}</InputLabel>
-      <TextField
+      <Controller
+        as={TextField}
         required
         label='目次'
-        name={`${fieldPrefix}.chpater`}
+        name={fieldPrefix}
         ref={formHooks.register}
+        control={formHooks.control}
         margin="normal"
         fullWidth
         InputLabelProps={{
