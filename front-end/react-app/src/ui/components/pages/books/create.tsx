@@ -3,6 +3,7 @@ import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
 
 import { Chapters } from 'ui/components/pages/books/chapters';
+import { ConfirmModal } from 'ui/components/pages/books/confirm';
 import * as Usecase from 'usecases/book';
 import { BookRequest } from 'domain/api/models/book';
 
@@ -16,7 +17,8 @@ import Typography from '@material-ui/core/Typography';
 
 export const CreatePage = () => {
   const history = useHistory();
-  const [age, setAge] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [genreId, setGenreId] = useState(1);
   const formHooks = useForm<BookRequest>();
   const { fields, append, remove } = useFieldArray({
     control: formHooks.control,
@@ -25,14 +27,17 @@ export const CreatePage = () => {
   const onBackPage = () => {
     history.push('/book');
   }
+  const handleShowModal = () => {
+    setShowModal(!showModal);
+  }
   const onSubmit = (data: BookRequest) => {
     alert(JSON.stringify(data));
-    try {
-      Usecase.postBook(data);
-      history.push('/book');
-    } catch (e) {
-      alert(e);
-    }
+    // try {
+    //   Usecase.postBook(data);
+    //   history.push('/book');
+    // } catch (e) {
+    //   alert(e);
+    // }
   }
   const addChapter = () => {
     append({ chapter: '' })
@@ -43,12 +48,12 @@ export const CreatePage = () => {
   };
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setAge(event.target.value as string);
+    setGenreId(event.target.value as number);
   };
   return (
     <React.Fragment>
       <Typography gutterBottom variant="h3" component="h2">書籍登録</Typography>
-      <form onSubmit={formHooks.handleSubmit(onSubmit)} encType='multipart/form-data'>
+      <form onSubmit={formHooks.handleSubmit(handleShowModal)} encType='multipart/form-data'>
         <Controller
           as={TextField}
           required
@@ -110,8 +115,10 @@ export const CreatePage = () => {
             ref={formHooks.register}
             control={formHooks.control}
             defaultValue={1}
-            value={age}
+            value={genreId}
             onChange={handleChange}
+            fullWidth
+            variant="outlined"
             label="Age"
           >
             <MenuItem>
@@ -142,7 +149,15 @@ export const CreatePage = () => {
           placeholder='4行までメモできます'
         />
         <Button variant="contained" onClick={onBackPage}>戻る</Button>
-        <Button type='submit' variant="contained" size='medium' color="primary">登録</Button>
+        <Button type='submit' variant="contained" size='medium' color="primary" >登録</Button>
+        <ConfirmModal
+          showModal={showModal}
+          onSubmit={onSubmit}
+          handleShowModal={handleShowModal}
+          item={formHooks.getValues()}
+          message='この内容で書籍を保存しますか？'
+          label='保存'
+        />
       </form>
     </React.Fragment>
   )
