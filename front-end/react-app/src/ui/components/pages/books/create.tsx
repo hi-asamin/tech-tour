@@ -31,13 +31,12 @@ export const CreatePage = () => {
     setShowModal(!showModal);
   }
   const onSubmit = (data: BookRequest) => {
-    alert(JSON.stringify(data));
-    // try {
-    //   Usecase.postBook(data);
-    //   history.push('/book');
-    // } catch (e) {
-    //   alert(e);
-    // }
+    try {
+      Usecase.postBook(data);
+      history.push('/book');
+    } catch (e) {
+      alert(e);
+    }
   }
   const addChapter = () => {
     append({ chapter: '' })

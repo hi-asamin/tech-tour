@@ -3,10 +3,12 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { DummySlice } from 'slices/dummy';
 import { BookSlice } from 'slices/book';
+import { GenreSlice } from 'slices/genre';
 
 const appReducer = combineReducers({
   [DummySlice.name]: DummySlice.reducer,
   [BookSlice.name]: BookSlice.reducer,
+  [GenreSlice.name]: GenreSlice.reducer,
 });
 
 const store = configureStore({

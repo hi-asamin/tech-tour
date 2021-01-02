@@ -1,3 +1,5 @@
+import { Genre } from 'domain/api/models/genre';
+
 export interface BookRequest {
   title: string;
   author: string;
@@ -16,13 +18,6 @@ export type BookResponse = {
   genre: Genre;
   chapters: Chapter[];
   memo: string;
-}
-
-export type Genre = {
-  id: number;
-  genre: string;
-  created_at: string;
-  updated_at: string;
 }
 
 export type Chapter = {

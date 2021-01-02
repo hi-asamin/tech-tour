@@ -1,4 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
+
+import { StateType } from 'store';
+import { GenreState, Genre } from 'domain/api/models/genre';
+import * as Usecase from 'usecases/genre';
+
 import { Link } from "react-router-dom";
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -65,6 +72,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+
+const genreSelector = createSelector(
+  (state: ReturnType<StateType>) => state['api/genre'],
+  (state: GenreState) => state,
+);
+
 export interface GenericTemplateProps {
   children: React.ReactNode;
 }
@@ -72,6 +85,11 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
   children,
 }) => {
   const classes = useStyles();
+  const genreState = useSelector(genreSelector);
+  const genres: Genre[] = genreState.genres;
+  useEffect(() => {
+    Usecase.getGenreList();
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -85,7 +103,7 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
             noWrap
             className={classes.title}
           >
-            じょーすけ
+            Book Burn
           </Typography>
         </Toolbar>
       </AppBar>
@@ -99,10 +117,10 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
         <Toolbar />
         <div className={classes.drawerContainer}>
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
+            {genres.map(genre => (
+              <ListItem button key={genre.id}>
+                <ListItemIcon><MailIcon /></ListItemIcon>
+                <ListItemText primary={genre.genre} />
               </ListItem>
             ))}
           </List>
