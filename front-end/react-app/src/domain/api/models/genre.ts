@@ -1,3 +1,7 @@
+export type GenreRequest = {
+  genre: string;
+}
+
 export type Genre = {
   id: number;
   genre: string;

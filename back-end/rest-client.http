@@ -21,6 +21,15 @@ Content-Type: application/json
 }
 
 ###
+@name = postGenre
+POST {{host}}:{{port}}{{base_path}}/genres HTTP/1.1
+Content-Type: application/json
+
+{
+  "genre": "ビジネス"
+}
+
+###
 @name = putBook
 PUT {{host}}:{{port}}{{base_path}}/books/3 HTTP/1.1
 Content-Type: application/json

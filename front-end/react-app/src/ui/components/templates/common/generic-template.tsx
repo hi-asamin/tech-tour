@@ -1,25 +1,26 @@
 import React, { useEffect } from 'react';
+import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 
 import { StateType } from 'store';
-import { GenreState, Genre } from 'domain/api/models/genre';
+import { GenreState } from 'domain/api/models/genre';
 import * as Usecase from 'usecases/genre';
 
-import { Link } from "react-router-dom";
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import AppBar from '@material-ui/core/AppBar';
 import Box from "@material-ui/core/Box";
+import CategoryIcon from '@material-ui/icons/Category';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from "@material-ui/core/Container";
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
@@ -86,10 +87,13 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
 }) => {
   const classes = useStyles();
   const genreState = useSelector(genreSelector);
-  const genres: Genre[] = genreState.genres;
   useEffect(() => {
     Usecase.getGenreList();
   }, []);
+
+  const handleClick = () => {
+    alert('genre');
+  }
 
   return (
     <div className={classes.root}>
@@ -117,21 +121,27 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
         <Toolbar />
         <div className={classes.drawerContainer}>
           <List>
-            {genres.map(genre => (
-              <ListItem button key={genre.id}>
-                <ListItemIcon><MailIcon /></ListItemIcon>
+            <ListItem button component={Link} to='/book' >
+              <ListItemIcon><MenuBookIcon /></ListItemIcon>
+              <ListItemText primary='書籍一覧' />
+            </ListItem>
+            {genreState.genres.map(genre => (
+              <ListItem button key={genre.id} component={Link} to={`/book`} onClick={handleClick} >
+                <ListItemIcon><MenuBookIcon /></ListItemIcon>
                 <ListItemText primary={genre.genre} />
               </ListItem>
             ))}
           </List>
           <Divider />
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            <ListItem button component={Link} to='/genre' >
+              <ListItemIcon><CategoryIcon /></ListItemIcon>
+              <ListItemText primary='ジャンル管理' />
+            </ListItem>
+            <ListItem button component={Link} to='/profile' >
+              <ListItemIcon><AccountBoxIcon /></ListItemIcon>
+              <ListItemText primary='プロフィール編集' />
+            </ListItem>
           </List>
         </div>
       </Drawer>
