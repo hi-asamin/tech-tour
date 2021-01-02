@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
+
+import { StateType } from 'store';
+import { GenreState } from 'domain/api/models/genre';
 
 import { Chapters } from 'ui/components/pages/books/chapters';
 import { ConfirmModal } from 'ui/components/pages/books/confirm';
@@ -15,10 +20,15 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
+const genreSelector = createSelector(
+  (state: ReturnType<StateType>) => state['api/genre'],
+  (state: GenreState) => state,
+);
+
 export const CreatePage = () => {
   const history = useHistory();
+  const genreState = useSelector(genreSelector);
   const [showModal, setShowModal] = useState(false);
-  const [genreId, setGenreId] = useState(1);
   const formHooks = useForm<BookRequest>();
   const { fields, append, remove } = useFieldArray({
     control: formHooks.control,
@@ -46,9 +56,6 @@ export const CreatePage = () => {
     remove(index);
   };
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setGenreId(event.target.value as number);
-  };
   return (
     <React.Fragment>
       <Typography gutterBottom variant="h3" component="h2">書籍登録</Typography>
@@ -113,9 +120,6 @@ export const CreatePage = () => {
             name='genre_id'
             ref={formHooks.register}
             control={formHooks.control}
-            defaultValue={1}
-            value={genreId}
-            onChange={handleChange}
             fullWidth
             variant="outlined"
             label="Age"
@@ -123,9 +127,9 @@ export const CreatePage = () => {
             <MenuItem>
               <em>None</em>
             </MenuItem>
-            <MenuItem value={1}>政治・経済</MenuItem>
-            <MenuItem value={1}>雑学</MenuItem>
-            <MenuItem value={1}>ゴミ</MenuItem>
+            {genreState.genres.map(genre => {
+              return <MenuItem key={genre.id} value={genre.id}>{genre.genre}</MenuItem>
+            })}
           </Controller>
         </FormControl>
         <Chapters　chapters={fields} remove={removeChapter} formHooks={formHooks} />
