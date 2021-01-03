@@ -1,6 +1,7 @@
 import { Connection, EntityManager } from 'typeorm';
 import { Router, Request, Response } from 'express';
 import { BookController } from '../../interface/controller/book-controller';
+import { SearchOption } from '../../interface/dto/book.dto';
 
 import { SqlConnection } from '../sqlhandler';
 
@@ -34,10 +35,10 @@ router.get(
   }
 );
 
-router.get(
+router.post(
   '/search',
   async (req: Request, res: Response) => {
-    const response = await bookController.findOne(Number(req.params.id));
+    const response = await bookController.search(req.body);
     res.status(200).json(response);
   }
 );

@@ -10,3 +10,8 @@ export type BookRequestDTO = {
 export type Chapter = {
   chapter: string;
 }
+
+export type SearchOption = {
+  key?: string;
+  value?: string;
+}

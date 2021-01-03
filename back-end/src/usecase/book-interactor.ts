@@ -1,5 +1,5 @@
 import { Book } from '../domain/entity/book';
-import { BookRequestDTO } from "~/src/interface/dto/book.dto";
+import { BookRequestDTO, SearchOption } from "~/src/interface/dto/book.dto";
 import { IBookRepository } from '../domain/repository/book-repository';
 
 export class BookInteractor {
@@ -16,6 +16,21 @@ export class BookInteractor {
 
   public async findOne(id: number): Promise<Book | undefined> {
     return await this.bookRepository.findOne(id);
+  }
+
+  public async search(option: SearchOption): Promise<Book[] | undefined> {
+    console.log(option);
+    if (option.key && option.value) {
+      let key: string = '';
+      let value: string | number = 0;
+      if (option.key === 'genre') {
+        key = 'genre_id';
+        value = Number(option.value);
+      }
+      console.log(`key: ${key}, value: ${value}`)
+      return await this.bookRepository.search(key, value);
+    }
+    return [];
   }
 
   public async create(body: BookRequestDTO): Promise<Book> {

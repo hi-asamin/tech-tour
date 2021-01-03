@@ -19,6 +19,10 @@ export class BookRepository implements IBookRepository {
     return await this.manager.findOne(Book, id);
   }
 
+  async search(key: string, value: string | number): Promise<Book[] | undefined> {
+    return await this.manager.find(Book, { where: { [key]: value } });
+  }
+
   async save(item: BookRequestDTO): Promise<Book> {
     const chapters: Chapter[] = item.chapters ? item.chapters.map(chapter => {
       return new Chapter(chapter.chapter);

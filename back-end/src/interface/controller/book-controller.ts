@@ -1,6 +1,6 @@
 import { EntityManager } from 'typeorm';
 import { Book } from '../../domain/entity/book';
-import { BookRequestDTO } from "~/src/interface/dto/book.dto";
+import { BookRequestDTO, SearchOption } from "~/src/interface/dto/book.dto";
 import { BookInteractor } from '../../usecase/book-interactor';
 import { BookRepository } from '../database/book-repository';
 
@@ -20,6 +20,10 @@ export class BookController {
 
   public async findOne(id: number) {
     return this.bookInteractor.findOne(id);
+  }
+
+  public async search(option: SearchOption) {
+    return await this.bookInteractor.search(option);
   }
 
   public async create(body: BookRequestDTO) {
