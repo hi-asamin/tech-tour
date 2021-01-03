@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { PayloadAction } from '@reduxjs/toolkit';
 
 import { BookRequest, BookResponse, BookIndexState, Status } from 'domain/api/models/book';
+import { SearchState } from 'domain/ui/models/search';
 
 const uri = '/books';
 
@@ -12,6 +13,11 @@ export async function findAll(): Promise<BookResponse[]> {
 
 export async function findOne(id: number): Promise<BookResponse> {
   const res: AxiosResponse<BookResponse> = await axios.get(`${uri}/${id}`);
+  return res.data;
+}
+
+export async function search(body: SearchState): Promise<BookResponse[]> {
+  const res: AxiosResponse<BookResponse[]> = await axios.post(`${uri}/search`, body);
   return res.data;
 }
 

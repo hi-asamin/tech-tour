@@ -6,6 +6,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { StateType } from 'store';
 import { BookIndexState } from 'domain/api/models/book';
 import * as Usecase from 'usecases/book';
+import { SearchState } from 'domain/ui/models/search';
 
 import { BookList } from 'ui/components/pages/books/list';
 
@@ -17,12 +18,18 @@ const bookIndexSelector = createSelector(
   (state: BookIndexState) => state,
 )
 
+const searchStateSelector = createSelector(
+  (state: ReturnType<StateType>) => state['ui/search'],
+  (state: SearchState) => state,
+)
+
 export const IndexPage = () => {
-  useEffect(() => {
-    Usecase.getBookList();
-  }, []);
-  const bookIndex = useSelector(bookIndexSelector);
   const history = useHistory();
+  const bookIndex = useSelector(bookIndexSelector);
+  const searchState = useSelector(searchStateSelector);
+  useEffect(() => {
+    Usecase.getBookList(searchState);
+  }, [searchState]);
   const onCreate = () => {
     history.push('/book/create');
   }

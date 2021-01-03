@@ -1,12 +1,18 @@
 import { dispatch } from 'store';
 import { BookRequest, BookResponse } from 'domain/api/models/book';
-import { findAll, create } from 'domain/api/service/book';
+import { SearchState } from 'domain/ui/models/search';
+import { findAll, search, create } from 'domain/api/service/book';
 import { BookAction } from 'actions/book';
 
-export const getBookList = async () => {
+export const getBookList = async (searchState: SearchState) => {
   dispatch(BookAction.fetchBookIndexStateAction());
   try {
-    const books: BookResponse[] = await findAll();
+    let books: BookResponse[] = [];
+    if (searchState.key && searchState.value) {
+      books = await search(searchState)
+    } else {
+      books = await findAll();
+    }
     dispatch(BookAction.updateBookIndexStateAction({ books }));
   } catch (e) {
     dispatch(BookAction.failedBookIndexStateAction());

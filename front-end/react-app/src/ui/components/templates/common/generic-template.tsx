@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 
 import { StateType } from 'store';
 import { GenreState } from 'domain/api/models/genre';
 import * as Usecase from 'usecases/genre';
+import { SearchKey } from 'domain/ui/models/search';
+import * as SearchOption from 'usecases/search';
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import AppBar from '@material-ui/core/AppBar';
 import Box from "@material-ui/core/Box";
+import Button from '@material-ui/core/Button';
 import CategoryIcon from '@material-ui/icons/Category';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from "@material-ui/core/Container";
@@ -86,14 +89,22 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
   children,
 }) => {
   const classes = useStyles();
+  const history = useHistory();
   const genreState = useSelector(genreSelector);
   useEffect(() => {
     Usecase.getGenreList();
   }, []);
 
-  const handleClick = () => {
-    alert('genre');
-  }
+  const goHome = () => {
+    history.push('/book');
+  };
+  const handleGenreClick = (genreId?: number) => {
+    if (genreId) {
+      SearchOption.setSearchOption(SearchKey.genre, genreId);
+    } else {
+      SearchOption.clearSearchOption();
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -107,7 +118,7 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
             noWrap
             className={classes.title}
           >
-            Book Burn
+            <Button color="inherit" onClick={goHome}>Book Burn</Button>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -121,12 +132,12 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
         <Toolbar />
         <div className={classes.drawerContainer}>
           <List>
-            <ListItem button component={Link} to='/book' >
+            <ListItem button component={Link} to='/book' onClick={() => { handleGenreClick() }} >
               <ListItemIcon><MenuBookIcon /></ListItemIcon>
               <ListItemText primary='書籍一覧' />
             </ListItem>
             {genreState.genres.map(genre => (
-              <ListItem button key={genre.id} component={Link} to={`/book`} onClick={handleClick} >
+              <ListItem button key={genre.id} component={Link} to={`/book`} onClick={() => { handleGenreClick(genre.id) }} >
                 <ListItemIcon><MenuBookIcon /></ListItemIcon>
                 <ListItemText primary={genre.genre} />
               </ListItem>
