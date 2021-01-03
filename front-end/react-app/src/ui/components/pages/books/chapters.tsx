@@ -24,7 +24,7 @@ export const Chapters = (props: ChaptersProps) => {
           return (
             <>
             <Grid container>
-              <Grid item xs={11}>
+              <Grid item xs={10}>
                 <Controller
                   as={TextField}
                   label={`目次 ${index+1}`}
@@ -42,7 +42,7 @@ export const Chapters = (props: ChaptersProps) => {
                   disabled={!editable}
                 />
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={2}>
                 <Button variant="contained" color="secondary" size='large' onClick={remove(index)} disabled={!editable} style={{marginTop: '1rem'}} >削除</Button>
               </Grid>
             </Grid>

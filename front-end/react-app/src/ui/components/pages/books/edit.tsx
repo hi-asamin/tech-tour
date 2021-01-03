@@ -14,6 +14,7 @@ import { BookInfoState } from 'domain/ui/models/book';
 import { BookRequest } from 'domain/api/models/book';
 
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
 const bookInfoSelector = createSelector(
@@ -65,27 +66,29 @@ export const EditPage = () => {
   return (
     <React.Fragment>
       <Typography gutterBottom variant="h3" component="h2">書籍編集</Typography>
-      <div style={{textAlign: 'right'}}>
-        <div style={{paddingBottom: '1rem'}}>
-          <Button type='button' variant="contained" size='medium' onClick={handleEditable} color={editable?'default':'primary'} style={{marginRight: '1rem'}} >{ editable ? '中断' : '編集'}</Button>
-          <Button variant="contained" onClick={onBackPage}>戻る</Button>
+      <Container maxWidth="sm" >
+        <div style={{textAlign: 'right'}}>
+          <div style={{paddingBottom: '1rem'}}>
+            <Button type='button' variant="contained" size='medium' onClick={handleEditable} color={editable?'default':'primary'} style={{marginRight: '1rem'}} >{ editable ? '中断' : '編集'}</Button>
+            <Button variant="contained" onClick={onBackPage}>戻る</Button>
+          </div>
+          <div>
+            <Button type='button' variant="contained" size='medium' color="secondary" onClick={onDelete} >削除</Button>
+          </div>
         </div>
-        <div>
-          <Button type='button' variant="contained" size='medium' color="secondary" onClick={onDelete} >削除</Button>
-        </div>
-      </div>
-      <form onSubmit={formHooks.handleSubmit(handleShowModal)} encType='multipart/form-data'>
-        <FormOrganism genres={genreState.genres} formHooks={formHooks} editable={editable} bookInfo={bookInfoState.book} />
-        <Button type='submit' fullWidth variant="contained" size='medium' color="primary" disabled={!editable} >保存</Button>
-        <ConfirmModal
-          showModal={showModal}
-          onSubmit={onSubmit}
-          handleShowModal={handleShowModal}
-          item={formHooks.getValues()}
-          message='この内容で書籍を保存しますか？'
-          label='保存'
-        />
-      </form>
+        <form onSubmit={formHooks.handleSubmit(handleShowModal)} encType='multipart/form-data'>
+          <FormOrganism genres={genreState.genres} formHooks={formHooks} editable={editable} bookInfo={bookInfoState.book} />
+          <Button type='submit' fullWidth variant="contained" size='medium' color="primary" disabled={!editable} >保存</Button>
+          <ConfirmModal
+            showModal={showModal}
+            onSubmit={onSubmit}
+            handleShowModal={handleShowModal}
+            item={formHooks.getValues()}
+            message='この内容で書籍を保存しますか？'
+            label='保存'
+          />
+        </form>
+      </Container>
     </React.Fragment>
   )
 };
