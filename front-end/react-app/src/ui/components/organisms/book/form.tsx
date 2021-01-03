@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useFieldArray, Controller, UseFormMethods } from "react-hook-form";
 
 import { Genre } from 'domain/api/models/genre';
 
 import { Chapters } from 'ui/components/pages/books/chapters';
-import { BookRequest } from 'domain/api/models/book';
+import { BookRequest, Chapter } from 'domain/api/models/book';
 
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -21,24 +21,27 @@ export interface MainProps {
 }
 
 export const FormOrganism = (props: MainProps) => {
-  useEffect(() => {
-    if (bookInfo?.chapters) {
-      initChapter();
-    }
-  }, []);
   const { genres, formHooks, editable, bookInfo } = props;
   const { fields, append, remove } = useFieldArray({
     control: formHooks.control,
     name: "chapters"
   });
-
-  const initChapter = () => {
-    if (bookInfo?.chapters.length) {
-      bookInfo.chapters.map(chapter => {
-        append({ chapter: chapter.chapter });
-      })
-    }
-  };
+  const chapters: Chapter[] | undefined = bookInfo?.chapters;
+  
+  const initChapter = useCallback(
+    () => {
+      if (chapters?.length) {
+        chapters.forEach(chapter => {
+          append({ chapter: chapter.chapter });
+        })
+      }
+    },
+    [chapters, append]
+  );
+    
+  useEffect(() => {
+    initChapter();
+  }, [initChapter]);
 
   const addChapter = () => {
     append({ chapter: '' })
@@ -135,8 +138,7 @@ export const FormOrganism = (props: MainProps) => {
         remove={removeChapter}
         formHooks={formHooks}
         editable={editable}
-        chapters={bookInfo?.chapters}
-        />
+      />
       <Button
         variant="contained"
         color="primary"

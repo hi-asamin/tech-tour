@@ -5,7 +5,6 @@ import { BookRequest, Chapter } from 'domain/api/models/book';
 
 import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
-import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
@@ -14,7 +13,6 @@ export interface ChaptersProps {
   remove: (index: number) => () => void,
   formHooks: UseFormMethods<BookRequest>,
   editable: boolean;
-  chapters?: Chapter[];
 }
 
 export const Chapters = (props: ChaptersProps) => {
