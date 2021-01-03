@@ -1,15 +1,9 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { createSelector } from '@reduxjs/toolkit';
-import { useForm, useFieldArray, Controller } from "react-hook-form";
-import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useFieldArray, Controller, UseFormMethods } from "react-hook-form";
 
-import { StateType } from 'store';
-import { GenreState } from 'domain/api/models/genre';
+import { Genre } from 'domain/api/models/genre';
 
 import { Chapters } from 'ui/components/pages/books/chapters';
-import { ConfirmModal } from 'ui/components/pages/books/confirm';
-import * as Usecase from 'usecases/book';
 import { BookRequest } from 'domain/api/models/book';
 
 import Button from '@material-ui/core/Button';
@@ -19,147 +13,157 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 
-const genreSelector = createSelector(
-  (state: ReturnType<StateType>) => state['api/genre'],
-  (state: GenreState) => state,
-);
+export interface MainProps {
+  genres: Genre[];
+  formHooks: UseFormMethods<BookRequest>;
+  editable: boolean;
+  bookInfo?: BookRequest;
+}
 
-export const FormOrganism = () => {
-  const history = useHistory();
-  const genreState = useSelector(genreSelector);
-  const [showModal, setShowModal] = useState(false);
-  const formHooks = useForm<BookRequest>();
+export const FormOrganism = (props: MainProps) => {
+  useEffect(() => {
+    if (bookInfo?.chapters) {
+      initChapter();
+    }
+  }, []);
+  const { genres, formHooks, editable, bookInfo } = props;
   const { fields, append, remove } = useFieldArray({
     control: formHooks.control,
     name: "chapters"
   });
-  const onBackPage = () => {
-    history.push('/book');
-  }
-  const handleShowModal = () => {
-    setShowModal(!showModal);
-  }
-  const onSubmit = (data: BookRequest) => {
-    try {
-      Usecase.postBook(data);
-      history.push('/book');
-    } catch (e) {
-      alert(e);
+
+  const initChapter = () => {
+    if (bookInfo?.chapters.length) {
+      bookInfo.chapters.map(chapter => {
+        append({ chapter: chapter.chapter });
+      })
     }
-  }
+  };
+
   const addChapter = () => {
     append({ chapter: '' })
   };
 
   const removeChapter = (index: number) => () => {
-    remove(index);
+    const result = window.confirm('本当にこの目次を削除しますか？');
+    if (result) {
+      remove(index);
+    }
   };
 
   return (
     <React.Fragment>
-      <form onSubmit={formHooks.handleSubmit(handleShowModal)} encType='multipart/form-data'>
+      <Controller
+        as={TextField}
+        required
+        label='タイトル'
+        name='title'
+        defaultValue={bookInfo?.title}
+        ref={formHooks.register}
+        control={formHooks.control}
+        margin="normal"
+        fullWidth
+        InputLabelProps={{
+          shrink: true,
+        }}
+        variant='outlined'
+        placeholder='本のタイトルを入力してください'
+        disabled={!editable}
+      />
+      <Controller
+        as={TextField}
+        label='著者'
+        name='author'
+        defaultValue={bookInfo?.author}
+        ref={formHooks.register}
+        control={formHooks.control}
+        margin="normal"
+        fullWidth
+        InputLabelProps={{
+          shrink: true,
+        }}
+        variant='outlined'
+        placeholder='本の著者を入力してください'
+        disabled={!editable}
+      />
+      {/* <input
+        accept="image/*"
+        name='image'
+        ref={formHooks.register}
+        id="contained-button-file"
+        multiple
+        type="file"
+      /> */}
+      <Controller
+        as={TextField}
+        label='画像'
+        name='image'
+        defaultValue={bookInfo?.image}
+        ref={formHooks.register}
+        control={formHooks.control}
+        margin="normal"
+        fullWidth
+        InputLabelProps={{
+          shrink: true,
+        }}
+        variant='outlined'
+        placeholder='画像を入力してください'
+        disabled={!editable}
+      />
+      <FormControl fullWidth variant="outlined">
+        <InputLabel shrink>ジャンル</InputLabel>
         <Controller
-          as={TextField}
-          required
-          label='タイトル'
-          name='title'
+          as={Select}
+          name='genre_id'
+          defaultValue={bookInfo?.genre_id}
           ref={formHooks.register}
           control={formHooks.control}
-          margin="normal"
-          fullWidth
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant='outlined'
-          placeholder='本のタイトルを入力してください'
-        />
-        <Controller
-          as={TextField}
-          label='著者'
-          name='author'
-          ref={formHooks.register}
-          control={formHooks.control}
-          defaultValue=''
-          margin="normal"
-          fullWidth
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant='outlined'
-          placeholder='本の著者を入力してください'
-        />
-        {/* <input
-          accept="image/*"
-          name='image'
-          ref={formHooks.register}
-          id="contained-button-file"
-          multiple
-          type="file"
-        /> */}
-        <Controller
-          as={TextField}
-          label='画像'
-          name='image'
-          ref={formHooks.register}
-          control={formHooks.control}
-          defaultValue=''
-          margin="normal"
-          fullWidth
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant='outlined'
-          placeholder='画像を入力してください'
-        />
-        <FormControl variant="outlined">
-          <InputLabel shrink>ジャンル</InputLabel>
-          <Controller
-            as={Select}
-            name='genre_id'
-            ref={formHooks.register}
-            control={formHooks.control}
-            fullWidth
-            variant="outlined"
-            label="Age"
-          >
-            <MenuItem>
-              <em>None</em>
-            </MenuItem>
-            {genreState.genres.map(genre => {
-              return <MenuItem key={genre.id} value={genre.id}>{genre.genre}</MenuItem>
-            })}
-          </Controller>
-        </FormControl>
-        <Chapters　chapters={fields} remove={removeChapter} formHooks={formHooks} />
-        <Button variant="contained" color="primary" onClick={addChapter}>追加</Button>
-        <Controller
-          as={TextField}
-          label="メモ"
-          name='memo'
-          ref={formHooks.register}
-          control={formHooks.control}
-          defaultValue=''
-          multiline
-          rows={4}
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
           variant="outlined"
-          placeholder='4行までメモできます'
+          label="Age"
+          disabled={!editable}
+        >
+          <MenuItem>
+            <em>None</em>
+          </MenuItem>
+          {genres.map(genre => {
+            return <MenuItem key={genre.id} value={genre.id}>{genre.genre}</MenuItem>
+          })}
+        </Controller>
+      </FormControl>
+      <Chapters
+        fields={fields}
+        remove={removeChapter}
+        formHooks={formHooks}
+        editable={editable}
+        chapters={bookInfo?.chapters}
         />
-        <Button variant="contained" onClick={onBackPage}>戻る</Button>
-        <Button type='submit' variant="contained" size='medium' color="primary" >登録</Button>
-        <ConfirmModal
-          showModal={showModal}
-          onSubmit={onSubmit}
-          handleShowModal={handleShowModal}
-          item={formHooks.getValues()}
-          message='この内容で書籍を保存しますか？'
-          label='保存'
-        />
-      </form>
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth
+        onClick={addChapter}
+        disabled={!editable}
+      >
+        目次追加
+      </Button>
+      <Controller
+        as={TextField}
+        label="メモ"
+        name='memo'
+        defaultValue={bookInfo?.memo}
+        ref={formHooks.register}
+        control={formHooks.control}
+        multiline
+        rows={4}
+        fullWidth
+        margin="normal"
+        InputLabelProps={{
+          shrink: true,
+        }}
+        variant="outlined"
+        placeholder='4行までメモできます'
+        disabled={!editable}
+      />
     </React.Fragment>
   )
 };

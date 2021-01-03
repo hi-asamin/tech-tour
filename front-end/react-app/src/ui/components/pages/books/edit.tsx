@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { StateType } from 'store';
 import { GenreState } from 'domain/api/models/genre';
 
-import { FormOrganism } from 'ui/components/organisms/book/form2';
+import { FormOrganism } from 'ui/components/organisms/book/form';
 import { ConfirmModal } from 'ui/components/pages/books/confirm';
 import * as Usecase from 'usecases/book';
 import { BookInfoState } from 'domain/ui/models/book';

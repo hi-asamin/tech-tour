@@ -7,38 +7,47 @@ import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 
 export interface ChaptersProps {
-  chapters: Partial<ArrayField<Record<string, any>, "id">>,
+  fields: Partial<ArrayField<Record<string, any>, "id">>,
   remove: (index: number) => () => void,
   formHooks: UseFormMethods<BookRequest>,
+  editable: boolean;
+  chapters?: Chapter[];
 }
 
 export const Chapters = (props: ChaptersProps) => {
-  const { chapters, remove,  formHooks } = props;
+  const { fields, remove,  formHooks, editable } = props;
   return (
     <>
       <FormGroup>
-        <InputLabel>目次</InputLabel>
-        {chapters.map((_: Chapter, index: number) => {
+        {fields.map((chapter: Chapter, index: number) => {
           return (
             <>
-              <Controller
-                as={TextField}
-                label={`目次 ${index+1}`}
-                name={`chapters[${index}].chapter`}
-                ref={formHooks.register}
-                control={formHooks.control}
-                defaultValue=''
-                margin="normal"
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant='outlined'
-                placeholder='目次を入力してください'
-              />
-              <Button variant="contained" color="secondary" onClick={remove(index)}>削除</Button>
+            <Grid container>
+              <Grid item xs={11}>
+                <Controller
+                  as={TextField}
+                  label={`目次 ${index+1}`}
+                  name={`chapters[${index}].chapter`}
+                  ref={formHooks.register}
+                  control={formHooks.control}
+                  defaultValue={chapter.chapter}
+                  margin="normal"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant='outlined'
+                  placeholder='目次を入力してください'
+                  disabled={!editable}
+                />
+              </Grid>
+              <Grid item xs={1}>
+                <Button variant="contained" color="secondary" size='large' onClick={remove(index)} disabled={!editable} style={{marginTop: '1rem'}} >削除</Button>
+              </Grid>
+            </Grid>
             </>
           )
         })}
