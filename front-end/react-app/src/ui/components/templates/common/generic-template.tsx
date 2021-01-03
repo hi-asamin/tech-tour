@@ -19,11 +19,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from "@material-ui/core/Container";
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
+import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
+import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
@@ -46,15 +48,13 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
+      flexGrow: 1,
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
     },
     toolbar: {
       paddingRight: 24,
-    },
-    title: {
-      flexGrow: 1,
     },
     drawer: {
       width: drawerWidth,
@@ -73,6 +73,13 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       paddingTop: theme.spacing(4),
       paddingBottom: theme.spacing(8),
+    },
+    loginButton: {
+      flexGrow: 1,
+      paddingLeft: theme.spacing(150),
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
     },
   }),
 );
@@ -111,15 +118,18 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
+          {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton> */}
           <Typography
             component="h1"
             variant="h6"
             color="inherit"
             noWrap
-            className={classes.title}
           >
-            <Button color="inherit" onClick={goHome}>Book Burn</Button>
+            <Button color="inherit" onClick={goHome} >Book Burn</Button>
           </Typography>
+          <Button color="inherit" className={classes.loginButton} >Login</Button>
         </Toolbar>
       </AppBar>
       <Drawer
