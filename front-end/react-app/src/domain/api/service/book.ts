@@ -27,7 +27,7 @@ export async function create(body: BookRequest): Promise<BookResponse> {
 }
 
 export async function update(id: number, body: BookRequest): Promise<BookResponse> {
-  const res: AxiosResponse<BookResponse> = await axios.post(`${uri}/${id}`, body);
+  const res: AxiosResponse<BookResponse> = await axios.put(`${uri}/${id}`, body);
   return res.data;
 }
 

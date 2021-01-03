@@ -1,8 +1,9 @@
 import { dispatch } from 'store';
 import { BookRequest, BookResponse } from 'domain/api/models/book';
 import { SearchState } from 'domain/ui/models/search';
-import { findAll, search, create } from 'domain/api/service/book';
-import { BookAction } from 'actions/book';
+import { findAll, search, create, update, deleteById } from 'domain/api/service/book';
+import { BookAction, UIBookAction } from 'actions/book';
+import { BookInfoState } from 'domain/ui/models/book';
 
 export const getBookList = async (searchState: SearchState) => {
   dispatch(BookAction.fetchBookIndexStateAction());
@@ -25,4 +26,24 @@ export const postBook = async (book: BookRequest) => {
   } catch (e) {
     console.error(e);
   }
+}
+
+export const putBook = async (id: number, book: BookRequest) => {
+  try {
+    await update(id, book);
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export const deleteBook = async (id: number) => {
+  try {
+    await deleteById(id);
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export const setBookInfo = (book: BookInfoState) => {
+  dispatch(UIBookAction.updateBookInfoStateAction(book));
 }
