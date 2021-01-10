@@ -6,6 +6,8 @@ import GenericTemplate from 'ui/components/templates/common/generic-template';
 import { Index } from 'ui/components/pages';
 import { BookRoute } from 'routes/book';
 import { GenreRoute } from 'routes/genre';
+import { ProfileRoute } from 'routes/profile';
+import { LoginRoute } from 'routes/login';
 
 export const AppRoute = () => {
   return (
@@ -14,6 +16,8 @@ export const AppRoute = () => {
         <Route exact path='/' component={Index} />
         <BookRoute />
         <GenreRoute />
+        <ProfileRoute />
+        <LoginRoute />
       </GenericTemplate>
     </Router>
   );

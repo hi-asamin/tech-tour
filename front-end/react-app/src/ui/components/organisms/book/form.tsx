@@ -122,7 +122,6 @@ export const FormOrganism = (props: MainProps) => {
           ref={formHooks.register}
           control={formHooks.control}
           variant="outlined"
-          label="Age"
           disabled={!editable}
         >
           <MenuItem>
