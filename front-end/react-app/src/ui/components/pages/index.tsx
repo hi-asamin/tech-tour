@@ -1,16 +1,16 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
-import GenericTemplate from 'ui/components/templates/common/GenericTemplate';
+import { Link } from 'react-router-dom';
+import GenericTemplate from 'ui/components/templates/common/generic-template';
 
 import logo from '../../../logo.svg';
 
 export const Index = () => {
   return (
-    <GenericTemplate title=''>
+    <GenericTemplate>
       <div>
         <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
-          {/* <p>
+          <p>
             <Link to='/book'>Book Burn</Link>
             </p>
             <p>
@@ -24,7 +24,7 @@ export const Index = () => {
             </p>
             <p>
             <Link to='/curriculum/beginner/javascript/grammar'>JavaScript文法</Link>
-          </p> */}
+          </p>
         </header>
       </div>
     </GenericTemplate>

@@ -1,85 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
 import { useHistory } from 'react-router-dom';
+import { useForm } from "react-hook-form";
 
-import GenericTemplate from 'ui/components/templates/common/GenericTemplate';
+import { StateType } from 'store';
+import { BookRequest } from 'domain/api/models/book';
+import { GenreState } from 'domain/api/models/genre';
+import * as Usecase from 'usecases/book';
 
+import { ConfirmModal } from 'ui/components/pages/books/confirm';
+import { FormOrganism } from 'ui/components/organisms/book/form';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField'
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+
+const genreSelector = createSelector(
+  (state: ReturnType<StateType>) => state['api/genre'],
+  (state: GenreState) => state,
+);
 
 export const CreatePage = () => {
   const history = useHistory();
+  const formHooks = useForm<BookRequest>();
+  const genreState = useSelector(genreSelector);
+  const [showModal, setShowModal] = useState(false);
   const onBackPage = () => {
     history.push('/book');
-  }
-  const onSubmit = () => {
-    onBackPage();
-  }
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setAge(event.target.value as string);
   };
+  const handleShowModal = () => {
+    setShowModal(!showModal);
+  };
+  const onSubmit = (data: BookRequest) => {
+    try {
+      Usecase.postBook(data);
+      history.push('/book');
+    } catch (e) {
+      alert(e);
+    }
+  };
+
   return (
     <React.Fragment>
-      <GenericTemplate title='新規登録'>
-        {/* タイトル：テキストフィールド */}
-        {/* 画像 */}
-        {/* ジャンル：セレクトボックス */}
-        {/* 目次：任意で増やす */}
-        {/* メモ：テキスト */}
-        <form onSubmit={onSubmit} encType='multipart/form-data'>
-          <div style={{width: 600, margin: 'auto', display: 'flex', flexDirection: 'column'}} >
-            <TextField
-              required
-              label='タイトル'
-              margin="normal"
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant='outlined'
-              placeholder='本のタイトルを入力してください'
-            />
-            <FormControl variant="outlined">
-              <InputLabel shrink>Age</InputLabel>
-              <Select
-                value={age}
-                onChange={handleChange}
-                label="Age"
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-            <TextField
-              label="メモ"
-              multiline
-              rows={4}
-              fullWidth
-              margin="normal"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="outlined"
-              placeholder='4行までメモできます'
-            />
-            <Button variant="contained" onClick={onBackPage}>
-              戻る
-            </Button>
-            <Button type='submit' variant="contained" size='medium' color="primary">
-              登録
-            </Button>
-          </div>
+      <Container maxWidth="sm" >
+        <Typography gutterBottom variant="h3" component="h2">書籍登録</Typography>
+        <div style={{textAlign: 'right'}}>
+          <Button variant="contained" onClick={onBackPage} >戻る</Button>
+        </div>
+        <form onSubmit={formHooks.handleSubmit(handleShowModal)} encType='multipart/form-data'>
+          <FormOrganism genres={genreState.genres} formHooks={formHooks} editable={true} />
+          <Button type='submit' variant="contained" fullWidth color="primary" >登録</Button>
+          <ConfirmModal
+            showModal={showModal}
+            onSubmit={onSubmit}
+            handleShowModal={handleShowModal}
+            item={formHooks.getValues()}
+            message='この内容で書籍を保存しますか？'
+            label='保存'
+          />
         </form>
-      </GenericTemplate>
+      </Container>
     </React.Fragment>
   )
 };

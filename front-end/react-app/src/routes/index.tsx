@@ -1,18 +1,24 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import GenericTemplate from 'ui/components/templates/common/generic-template';
 
 import { Index } from 'ui/components/pages';
-import { CurriculumRoute } from 'routes/curriculum/curriculum-route';
-import { DummyRoute } from 'routes/dummy-route';
 import { BookRoute } from 'routes/book';
+import { GenreRoute } from 'routes/genre';
+import { ProfileRoute } from 'routes/profile';
+import { LoginRoute } from 'routes/login';
 
 export const AppRoute = () => {
   return (
     <Router>
-      <Route exact path='/' component={Index} />
-      <CurriculumRoute />
-      <DummyRoute />
-      <BookRoute />
+      <GenericTemplate>
+        <Route exact path='/' component={Index} />
+        <BookRoute />
+        <GenreRoute />
+        <ProfileRoute />
+        <LoginRoute />
+      </GenericTemplate>
     </Router>
   );
 }

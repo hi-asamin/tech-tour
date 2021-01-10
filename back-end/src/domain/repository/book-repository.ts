@@ -1,14 +1,16 @@
-import { TBookRequestBody } from '~/src/interface/book';
+import { BookRequestDTO } from '~/src/interface/dto/book.dto';
 import { Book } from '../entity/book';
 
 export interface IBookRepository {
   findAll(): Promise<Book[]>;
 
-  sampleCustomRawSelectQuery(id: number): Promise<Book[]>;
+  findOne(id: number): Promise<Book | undefined>;
 
-  add(item: TBookRequestBody): Promise<Book | undefined>;
+  search(key: string, value: string | number): Promise<Book[] | undefined>;
 
-  updateBook(id: number, item: TBookRequestBody): Promise<Book | undefined>;
+  save(item: BookRequestDTO): Promise<Book>;
 
-  deleteBook(id: number): Promise<void>;
+  update(id: number, item: BookRequestDTO): Promise<Book | undefined>;
+
+  delete(id: number): Promise<void>;
 }

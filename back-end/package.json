@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node dist/main.js",
     "dev": "nodemon src/main.ts",
+    "migration": "ts-node ./node_modules/.bin/typeorm migration:generate -f ormconfig.json",
+    "migration:run": "ts-node ./node_modules/.bin/typeorm  migration:run -f ormconfig.json",
+    "migration:revert": "ts-node ./node_modules/.bin/typeorm migration:revert -f ormconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

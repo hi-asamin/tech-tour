@@ -2,13 +2,17 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   Timestamp,
   UpdateDateColumn,
- } from 'typeorm'
-import { TBookRequestBody } from '../../interface/book';
+} from 'typeorm'
+import { Chapter } from './chapter';
+import { Genre } from './genre';
 
-@Entity('books')
+@Entity('m_book')
 export class Book {
   @PrimaryGeneratedColumn()
   id?: number;
@@ -16,16 +20,32 @@ export class Book {
   @Column({ type: 'varchar', length: 255 })
   title?: string;
 
-  @Column({ nullable: true } )
+  @Column({ type: 'varchar', length: 100 })
+  author?: string;
+
+  @Column({ nullable: true })
   image?: string;
 
-  @Column({ nullable: true } )
-  genre?: string;
+  @Column()
+  genre_id?: number;
 
-  @Column({ nullable: true } )
-  chapters?: string;
+  @ManyToOne(() => Genre, genre => genre.books, {
+    onDelete: 'CASCADE',
+    eager: true,
+  })
+  @JoinColumn([{
+    name: 'genre_id',
+    referencedColumnName: 'id'
+  }])
+  genre?: Genre;
 
-  @Column({ type: 'text', nullable: true } )
+  @OneToMany(() => Chapter, chapter => chapter.book, {
+    cascade: true,
+    eager: true,
+  })
+  chapters?: Chapter[];
+
+  @Column({ type: 'text', nullable: true })
   memo?: string;
 
   // レコードの作成時間, DATETIME(6)型
@@ -36,11 +56,13 @@ export class Book {
   @UpdateDateColumn()
   updated_at?: Timestamp;
 
-  constructor(book: TBookRequestBody) {
-    this.title = book?.title || '';
-    this.image = book?.image || '';
-    this.genre = String(book?.genre_id) || '';
-    this.chapters = book?.chapters.join(',') || '';
-    this.memo = book?.memo || '';
+
+  constructor(title: string, author: string, image: string, genre: Genre, chapters: Chapter[], memo: string) {
+    this.title = title;
+    this.author = author;
+    this.image = image;
+    this.genre = genre;
+    this.chapters = chapters;
+    this.memo = memo;
   }
 }

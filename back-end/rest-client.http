@@ -7,16 +7,36 @@
 {{host}}:{{port}}{{base_path}}/books
 
 ###
+@name = getBooksWithQuery
+POST {{host}}:{{port}}{{base_path}}/books/search
+Content-Type: application/json
+
+{
+  "key": "genre",
+  "value": 1
+}
+
+###
 @name = postBook
 POST {{host}}:{{port}}{{base_path}}/books HTTP/1.1
 Content-Type: application/json
 
 {
-  "title": "sample",
+  "title": "sample1",
+  "author": "asamin",
   "image": "sample.png",
   "genre_id": 1,
-  "chapters": ["序章", "最終章"],
+  "chapters": [ {"chapter":"序章1"}, {"chapter":"最終章1"}],
   "memo": ""
+}
+
+###
+@name = postGenre
+POST {{host}}:{{port}}{{base_path}}/genres HTTP/1.1
+Content-Type: application/json
+
+{
+  "genre": "ビジネス"
 }
 
 ###
@@ -26,12 +46,13 @@ Content-Type: application/json
 
 {
   "title": "sample_updated",
+  "author": "",
   "image": "sample.png",
   "genre_id": 1,
-  "chapters": ["序章", "最終章"],
+  "chapters": ["序章", "最終章1", "最終章2"],
   "memo": ""
 }
 
 ###
 @name = deleteBook
-DELETE {{host}}:{{port}}{{base_path}}/books/5 HTTP/1.1
+DELETE {{host}}:{{port}}{{base_path}}/books/2 HTTP/1.1
